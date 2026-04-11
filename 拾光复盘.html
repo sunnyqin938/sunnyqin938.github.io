@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拾光复盘 - 拾起光阴，与美好的自己相遇</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --warm-bg: #1a1512;
+            --warm-surface: #2d2420;
+            --warm-surface-light: #3d3129;
+            --warm-primary: #e8a87c;
+            --warm-primary-light: #f0c4a8;
+            --warm-glow: #f4d03f;
+            --warm-accent: #ff9f7f;
+            --warm-text: #f5e6d3;
+            --warm-text-muted: #a89080;
+            --warm-success: #7fb069;
+            --warm-border: rgba(232, 168, 124, 0.15);
+            
+            --font-display: 'ZCOOL XiaoWei', serif;
+            --font-body: 'Noto Serif SC', serif;
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-in-out-sine: cubic-bezier(0.37, 0, 0.63, 1);
+            --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--warm-bg);
+            color: var(--warm-text);
+            min-height: 100vh;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ===== Background Animation ===== */
+        .bg-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--warm-primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 4s var(--ease-in-out-sine) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+
+        /* ===== Header ===== */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--warm-primary);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInDown 1s var(--ease-out-expo) forwards;
+        }
+
+        .date-display {
+            font-size: 0.9rem;
+            color: var(--warm-text-muted);
+            opacity: 0;
+            animation: fadeInDown 1s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        .progress-container {
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s var(--ease-out-expo) 0.4s forwards;
+        }
+
+        .progress-ring {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .progress-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: var(--warm-surface-light);
+            stroke-width: 4;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: var(--warm-primary);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 226;
+            stroke-dashoffset: 226;
+            transition: stroke-dashoffset 0.8s var(--ease-out-expo);
+            filter: drop-shadow(0 0 6px rgba(232, 168, 124, 0.4));
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--warm-primary);
+        }
+
+        /* ===== Main Container ===== */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* ===== Section Cards ===== */
+        .section {
+            background: var(--warm-surface);
+            border: 1px solid var(--warm-border);
+            border-radius: 24px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s var(--ease-out-expo) forwards;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section:nth-child(1) { animation-delay: 0.3s; }
+        .section:nth-child(2) { animation-delay: 0.5s; }
+        .section:nth-child(3) { animation-delay: 0.7s; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            background: var(--warm-surface-light);
+            border: 1px solid var(--warm-border);
+            transition: all 0.3s var(--ease-elastic);
+        }
+
+        .section:hover .section-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px rgba(232, 168, 124, 0.3);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--warm-primary);
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            color: var(--warm-text-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* ===== Habits Section ===== */
+        .habits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .habit-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.2rem;
+            background: var(--warm-surface-light);
+            border-radius: 16px;
+            border: 1px solid var(--warm-border);
+            transition: all 0.3s var(--ease-smooth);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .habit-item:hover {
+            transform: translateX(4px);
+            border-color: rgba(232, 168, 124, 0.3);
+        }
+
+        .habit-item.completed {
+            background: rgba(127, 176, 105, 0.1);
+            border-color: rgba(127, 176, 105, 0.3);
+        }
+
+        .habit-item.custom .habit-icon {
+            background: rgba(232, 168, 124, 0.2);
+        }
+
+        .habit-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .habit-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            background: var(--warm-surface);
+            transition: all 0.3s var(--ease-elastic);
+        }
+
+        .habit-item.completed .habit-icon {
+            background: var(--warm-success);
+            transform: scale(1.1);
+        }
+
+        .habit-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .habit-name {
+            font-weight: 600;
+            color: var(--warm-text);
+            transition: color 0.3s;
+        }
+
+        .habit-item.completed .habit-name {
+            color: var(--warm-success);
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+
+        .habit-streak {
+            font-size: 0.75rem;
+            color: var(--warm-text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .habit-streak::before {
+            content: "🔥";
+            font-size: 0.8rem;
+        }
+
+        .habit-toggle {
+            width: 52px;
+            height: 32px;
+            background: var(--warm-surface);
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-elastic);
+            border: 2px solid var(--warm-border);
+        }
+
+        .habit-toggle::after {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--warm-text-muted);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.4s var(--ease-elastic);
+        }
+
+        .habit-item.completed .habit-toggle {
+            background: var(--warm-success);
+            border-color: var(--warm-success);
+        }
+
+        .habit-item.completed .habit-toggle::after {
+            transform: translateX(20px);
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .habit-delete {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--warm-text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            margin-left: 0.5rem;
+        }
+
+        .habit-delete:hover {
+            background: rgba(244, 67, 67, 0.1);
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        /* Add Habit Button */
+        .add-habit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: transparent;
+            border: 2px dashed var(--warm-border);
+            border-radius: 16px;
+            color: var(--warm-text-muted);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            margin-top: 0.5rem;
+        }
+
+        .add-habit-btn:hover {
+            border-color: var(--warm-primary);
+            color: var(--warm-primary);
+            background: rgba(232, 168, 124, 0.05);
+        }
+
+        .add-habit-btn .plus-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: transform 0.3s var(--ease-elastic);
+        }
+
+        .add-habit-btn:hover .plus-icon {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Add Habit Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 21, 18, 0.9);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--warm-surface);
+            border: 1px solid var(--warm-border);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--warm-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--warm-text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: var(--warm-surface-light);
+            border: 1px solid var(--warm-border);
+            border-radius: 12px;
+            color: var(--warm-text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .modal-input:focus {
+            border-color: var(--warm-primary);
+            box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1);
+        }
+
+        .icon-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .icon-option {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: var(--warm-surface-light);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .icon-option:hover {
+            transform: scale(1.1);
+            border-color: var(--warm-border);
+        }
+
+        .icon-option.selected {
+            border-color: var(--warm-primary);
+            background: rgba(232, 168, 124, 0.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.9rem;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background: var(--warm-primary);
+            color: var(--warm-bg);
+            border: none;
+            font-weight: 600;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(232, 168, 124, 0.3);
+        }
+
+        .modal-btn-secondary {
+            background: transparent;
+            color: var(--warm-text-muted);
+            border: 1px solid var(--warm-border);
+        }
+
+        .modal-btn-secondary:hover {
+            border-color: var(--warm-text);
+            color: var(--warm-text);
+        }
+
+        /* Particle burst animation */
+        .habit-particles {
+            position: absolute;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--warm-glow);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        @keyframes particleBurst {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* ===== Success Diary Section ===== */
+        .success-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: var(--warm-text-muted);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+
+        .success-input-wrapper {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .text-input {
+            flex: 1;
+            padding: 1rem 1.2rem;
+            background: var(--warm-surface-light);
+            border: 1px solid var(--warm-border);
+            border-radius: 14px;
+            color: var(--warm-text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .text-input:focus {
+            border-color: var(--warm-primary);
+            box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .text-input::placeholder {
+            color: var(--warm-text-muted);
+        }
+
+        .btn-add {
+            padding: 1rem 1.5rem;
+            background: var(--warm-primary);
+            color: var(--warm-bg);
+            border: none;
+            border-radius: 14px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-elastic);
+            white-space: nowrap;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(232, 168, 124, 0.4);
+        }
+
+        .btn-add:active {
+            transform: scale(0.95);
+        }
+
+        .success-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .success-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.2rem;
+            background: rgba(232, 168, 124, 0.08);
+            border-radius: 12px;
+            border-left: 3px solid var(--warm-primary);
+            animation: slideIn 0.4s var(--ease-out-expo);
+            transition: all 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .success-text {
+            color: var(--warm-text);
+            font-size: 0.95rem;
+        }
+
+        .success-delete {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--warm-text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .success-delete:hover {
+            background: rgba(244, 67, 67, 0.1);
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        .import-hint {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(232, 168, 124, 0.05);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: var(--warm-text-muted);
+            display: none;
+        }
+
+        .import-hint.has-content {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        .import-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.8rem;
+            background: var(--warm-surface);
+            border-radius: 20px;
+            margin: 0.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--warm-border);
+        }
+
+        .import-tag:hover {
+            background: var(--warm-primary);
+            color: var(--warm-bg);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Gratitude Section ===== */
+        .gratitude-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .gratitude-card {
+            position: relative;
+            padding: 1.2rem;
+            background: var(--warm-surface-light);
+            border-radius: 16px;
+            border: 1px solid var(--warm-border);
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .gratitude-card:focus-within {
+            transform: translateY(-4px);
+            border-color: var(--warm-primary);
+            box-shadow: 0 8px 24px rgba(232, 168, 124, 0.15);
+        }
+
+        .gratitude-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--warm-primary);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .gratitude-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: transparent;
+            border: none;
+            color: var(--warm-text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            min-height: 60px;
+        }
+
+        .gratitude-input::placeholder {
+            color: var(--warm-text-muted);
+            opacity: 0.6;
+        }
+
+        .gratitude-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(232, 168, 124, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s;
+            pointer-events: none;
+        }
+
+        .gratitude-card:focus-within .gratitude-glow {
+            width: 200%;
+            height: 200%;
+            opacity: 0;
+        }
+
+        /* ===== Complete Button ===== */
+        .complete-section {
+            margin-top: 2rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s var(--ease-out-expo) 1s forwards;
+        }
+
+        .btn-complete {
+            position: relative;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--warm-primary) 0%, var(--warm-accent) 100%);
+            color: var(--warm-bg);
+            border: none;
+            border-radius: 30px;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s var(--ease-elastic);
+            box-shadow: 0 4px 20px rgba(232, 168, 124, 0.3);
+        }
+
+        .btn-complete:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(232, 168, 124, 0.5);
+        }
+
+        .btn-complete:active {
+            transform: scale(0.98);
+        }
+
+        .btn-complete::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-complete:hover::before {
+            left: 100%;
+        }
+
+        .save-status {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--warm-text-muted);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .save-status.show {
+            opacity: 1;
+        }
+
+        .save-status.saved {
+            color: var(--warm-success);
+        }
+
+        /* ===== Celebration Overlay ===== */
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 21, 18, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .celebration-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .celebration-content {
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.6s var(--ease-elastic);
+        }
+
+        .celebration-overlay.active .celebration-content {
+            transform: scale(1);
+        }
+
+        .celebration-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .celebration-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--warm-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .celebration-subtitle {
+            color: var(--warm-text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .celebration-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--warm-glow);
+            font-family: var(--font-display);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--warm-text-muted);
+        }
+
+        .btn-close-celebration {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid var(--warm-primary);
+            color: var(--warm-primary);
+            border-radius: 25px;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-close-celebration:hover {
+            background: var(--warm-primary);
+            color: var(--warm-bg);
+        }
+
+        /* Canvas for particles */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 480px) {
+            .brand { font-size: 1.6rem; }
+            .section { padding: 1.4rem; }
+            .success-input-wrapper { flex-direction: column; }
+            .btn-add { width: 100%; }
+            .gratitude-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 1.5rem; }
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--warm-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--warm-surface-light);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--warm-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Stars -->
+    <div class="bg-stars" id="bgStars"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="brand">星夜复盘</h1>
+        <div class="date-display" id="dateDisplay">载入中...</div>
+        <div class="progress-container">
+            <div class="progress-ring">
+                <svg width="80" height="80">
+                    <circle class="progress-ring-bg" cx="40" cy="40" r="36"></circle>
+                    <circle class="progress-ring-fill" id="progressCircle" cx="40" cy="40" r="36"></circle>
+                </svg>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Section 1: Habits -->
+        <section class="section" id="habitsSection">
+            <div class="section-header">
+                <div class="section-icon">🌱</div>
+                <div>
+                    <div class="section-title">微习惯养成</div>
+                    <div class="section-subtitle">小坚持，大改变</div>
+                </div>
+            </div>
+            <div class="habits-list" id="habitsList">
+                <!-- Habits injected by JS -->
+            </div>
+            <button class="add-habit-btn" onclick="openAddHabitModal()">
+                <span class="plus-icon">+</span>
+                <span>添加新习惯</span>
+            </button>
+        </section>
+
+        <!-- Section 2: Success Diary -->
+        <section class="section" id="successSection">
+            <div class="section-header">
+                <div class="section-icon">⭐</div>
+                <div>
+                    <div class="section-title">成功日记</div>
+                    <div class="section-subtitle">记录今日值得庆祝的小事</div>
+                </div>
+            </div>
+            <div class="success-input-area">
+                <div class="input-hint">今天，我为自己做到了...</div>
+                <div class="success-input-wrapper">
+                    <input type="text" class="text-input" id="successInput" placeholder="例如：完成了重要的项目报告">
+                    <button class="btn-add" onclick="addSuccess()">添加</button>
+                </div>
+                <div class="import-hint" id="importHint">
+                    从微习惯导入：
+                    <span id="importTags"></span>
+                </div>
+                <div class="success-list" id="successList"></div>
+            </div>
+        </section>
+
+        <!-- Section 3: Gratitude -->
+        <section class="section" id="gratitudeSection">
+            <div class="section-header">
+                <div class="section-icon">🌙</div>
+                <div>
+                    <div class="section-title">感恩日记</div>
+                    <div class="section-subtitle">心怀感激，幸福常在</div>
+                </div>
+            </div>
+            <div class="gratitude-grid">
+                <div class="gratitude-card">
+                    <div class="gratitude-glow"></div>
+                    <div class="gratitude-label">
+                        <span>🌸</span> 感恩自己
+                    </div>
+                    <textarea class="gratitude-input" id="gratitudeSelf" placeholder="今天，我欣赏自己的..."></textarea>
+                </div>
+                <div class="gratitude-card">
+                    <div class="gratitude-glow"></div>
+                    <div class="gratitude-label">
+                        <span>💝</span> 感恩他人
+                    </div>
+                    <textarea class="gratitude-input" id="gratitudeOthers" placeholder="感谢_____，因为..."></textarea>
+                </div>
+                <div class="gratitude-card">
+                    <div class="gratitude-glow"></div>
+                    <div class="gratitude-label">
+                        <span>🍃</span> 感恩自然
+                    </div>
+                    <textarea class="gratitude-input" id="gratitudeNature" placeholder="大自然让我感受到..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Button -->
+        <div class="complete-section">
+            <button class="btn-complete" onclick="completeReview()">
+                ✨ 带着满足入睡
+            </button>
+            <div class="save-status" id="saveStatus">已自动保存</div>
+        </div>
+    </main>
+
+    <!-- Add Habit Modal -->
+    <div class="modal-overlay" id="addHabitModal">
+        <div class="modal-content">
+            <h3 class="modal-title">添加新习惯</h3>
+            <div class="modal-input-group">
+                <label class="modal-label">习惯名称</label>
+                <input type="text" class="modal-input" id="newHabitName" placeholder="例如：写日记、早起...">
+            </div>
+            <div class="modal-input-group">
+                <label class="modal-label">选择图标</label>
+                <div class="icon-selector" id="iconSelector">
+                    <span class="icon-option selected" data-icon="📝">📝</span>
+                    <span class="icon-option" data-icon="🌅">🌅</span>
+                    <span class="icon-option" data-icon="🎨">🎨</span>
+                    <span class="icon-option" data-icon="🎵">🎵</span>
+                    <span class="icon-option" data-icon="💪">💪</span>
+                    <span class="icon-option" data-icon="🥗">🥗</span>
+                    <span class="icon-option" data-icon="😴">😴</span>
+                    <span class="icon-option" data-icon="💧">💧</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeAddHabitModal()">取消</button>
+                <button class="modal-btn modal-btn-primary" onclick="confirmAddHabit()">添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div class="celebration-overlay" id="celebrationOverlay">
+        <canvas id="particle-canvas"></canvas>
+        <div class="celebration-content">
+            <div class="celebration-icon">🌟</div>
+            <h2 class="celebration-title">今日复盘完成</h2>
+            <p class="celebration-subtitle">你正在变得更好，晚安</p>
+            <div class="celebration-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="statHabits">0</div>
+                    <div class="stat-label">习惯达成</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statSuccess">0</div>
+                    <div class="stat-label">成功记录</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statGratitude">0</div>
+                    <div class="stat-label">感恩时刻</div>
+                </div>
+            </div>
+            <button class="btn-close-celebration" onclick="closeCelebration()">明天见</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== Data Store =====
+        const Store = {
+            getTodayKey() {
+                return new Date().toISOString().split('T')[0];
+            },
+            
+            getData() {
+                const key = this.getTodayKey();
+                const data = localStorage.getItem(`review_${key}`);
+                return data ? JSON.parse(data) : this.getDefaultData();
+            },
+            
+            getDefaultData() {
+                return {
+                    habits: [
+                        { id: 1, name: "阅读15分钟", icon: "📚", streak: 5, completed: false, isDefault: true },
+                        { id: 2, name: "运动20分钟", icon: "🚶", streak: 3, completed: false, isDefault: true },
+                        { id: 3, name: "冥想10分钟", icon: "🧘", streak: 12, completed: false, isDefault: true }
+                    ],
+                    successList: [],
+                    gratitude: { self: "", others: "", nature: "" },
+                    completed: false
+                };
+            },
+            
+            saveData(data) {
+                const key = this.getTodayKey();
+                localStorage.setItem(`review_${key}`, JSON.stringify(data));
+                this.showSaveStatus();
+            },
+            
+            showSaveStatus() {
+                const status = document.getElementById('saveStatus');
+                status.textContent = '已自动保存';
+                status.classList.add('show', 'saved');
+                setTimeout(() => status.classList.remove('show'), 2000);
+            }
+        };
+
+        // ===== State =====
+        let appData = Store.getData();
+        let selectedIcon = '📝';
+
+        // ===== Initialization =====
+        function init() {
+            renderDate();
+            renderHabits();
+            renderSuccessList();
+            renderGratitude();
+            updateProgress();
+            createBackgroundStars();
+            initIconSelector();
+            
+            // Auto-save gratitude inputs
+            ['gratitudeSelf', 'gratitudeOthers', 'gratitudeNature'].forEach(id => {
+                document.getElementById(id).addEventListener('input', debounce(saveGratitude, 500));
+            });
+            
+            // Enter key for success input
+            document.getElementById('successInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addSuccess();
+            });
+            
+            // Enter key for new habit input
+            document.getElementById('newHabitName').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') confirmAddHabit();
+            });
+        }
+
+        function renderDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('zh-CN', options);
+        }
+
+        function createBackgroundStars() {
+            const container = document.getElementById('bgStars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                star.style.animationDuration = (3 + Math.random() * 3) + 's';
+                container.appendChild(star);
+            }
+        }
+
+        // ===== Habits Module =====
+        function renderHabits() {
+            const container = document.getElementById('habitsList');
+            container.innerHTML = '';
+            
+            appData.habits.forEach(habit => {
+                const item = document.createElement('div');
+                item.className = `habit-item ${habit.completed ? 'completed' : ''} ${!habit.isDefault ? 'custom' : ''}`;
+                item.innerHTML = `
+                    <div class="habit-info">
+                        <div class="habit-icon">${habit.icon}</div>
+                        <div class="habit-text">
+                            <div class="habit-name">${habit.name}</div>
+                            <div class="habit-streak">连续 ${habit.streak} 天</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div class="habit-toggle" onclick="toggleHabit(${habit.id}, this)"></div>
+                        ${!habit.isDefault ? `<button class="habit-delete" onclick="deleteHabit(${habit.id}, event)">×</button>` : ''}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            
+            updateImportHint();
+        }
+
+        function toggleHabit(id, element) {
+            const habit = appData.habits.find(h => h.id === id);
+            if (!habit) return;
+            
+            habit.completed = !habit.completed;
+            
+            // Create particle burst
+            if (habit.completed) {
+                createParticles(element);
+            }
+            
+            Store.saveData(appData);
+            renderHabits();
+            updateProgress();
+        }
+
+        function deleteHabit(id, event) {
+            event.stopPropagation();
+            if (!confirm('确定要删除这个习惯吗？')) return;
+            
+            appData.habits = appData.habits.filter(h => h.id !== id);
+            Store.saveData(appData);
+            renderHabits();
+            updateProgress();
+        }
+
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const colors = ['#f4d03f', '#e8a87c', '#ff9f7f', '#7fb069'];
+            
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = rect.left + rect.width / 2 + 'px';
+                particle.style.top = rect.top + rect.height / 2 + 'px';
+                particle.style.width = '6px';
+                particle.style.height = '6px';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '9999';
+                
+                const angle = (i / 12) * Math.PI * 2;
+                const velocity = 80 + Math.random() * 40;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.animation = 'particleBurst 0.8s ease-out forwards';
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+        }
+
+        function updateImportHint() {
+            const completedHabits = appData.habits.filter(h => h.completed);
+            const hint = document.getElementById('importHint');
+            const tagsContainer = document.getElementById('importTags');
+            
+            if (completedHabits.length > 0) {
+                hint.classList.add('has-content');
+                tagsContainer.innerHTML = completedHabits.map(h => 
+                    `<span class="import-tag" onclick="importHabit('${h.name}')">${h.icon} ${h.name}</span>`
+                ).join('');
+            } else {
+                hint.classList.remove('has-content');
+            }
+        }
+
+        function importHabit(name) {
+            const input = document.getElementById('successInput');
+            input.value = `完成了${name}`;
+            addSuccess();
+        }
+
+        // ===== Add Habit Modal =====
+        function initIconSelector() {
+            const selector = document.getElementById('iconSelector');
+            selector.addEventListener('click', (e) => {
+                if (e.target.classList.contains('icon-option')) {
+                    selector.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    selectedIcon = e.target.dataset.icon;
+                }
+            });
+        }
+
+        function openAddHabitModal() {
+            document.getElementById('addHabitModal').classList.add('active');
+            document.getElementById('newHabitName').focus();
+        }
+
+        function closeAddHabitModal() {
+            document.getElementById('addHabitModal').classList.remove('active');
+            document.getElementById('newHabitName').value = '';
+        }
+
+        function confirmAddHabit() {
+            const name = document.getElementById('newHabitName').value.trim();
+            if (!name) {
+                alert('请输入习惯名称');
+                return;
+            }
+            
+            const newId = Math.max(...appData.habits.map(h => h.id), 0) + 1;
+            appData.habits.push({
+                id: newId,
+                name: name,
+                icon: selectedIcon,
+                streak: 1,
+                completed: false,
+                isDefault: false
+            });
+            
+            Store.saveData(appData);
+            renderHabits();
+            updateProgress();
+            closeAddHabitModal();
+        }
+
+        // ===== Success Diary Module =====
+        function addSuccess() {
+            const input = document.getElementById('successInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            appData.successList.push({
+                id: Date.now(),
+                text: text,
+                time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+            });
+            
+            input.value = '';
+            Store.saveData(appData);
+            renderSuccessList();
+            updateProgress();
+        }
+
+        function renderSuccessList() {
+            const container = document.getElementById('successList');
+            container.innerHTML = '';
+            
+            appData.successList.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'success-item';
+                div.innerHTML = `
+                    <span class="success-text">${item.text}</span>
+                    <button class="success-delete" onclick="deleteSuccess(${item.id})">×</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteSuccess(id) {
+            appData.successList = appData.successList.filter(item => item.id !== id);
+            Store.saveData(appData);
+            renderSuccessList();
+            updateProgress();
+        }
+
+        // ===== Gratitude Module =====
+        function renderGratitude() {
+            document.getElementById('gratitudeSelf').value = appData.gratitude.self;
+            document.getElementById('gratitudeOthers').value = appData.gratitude.others;
+            document.getElementById('gratitudeNature').value = appData.gratitude.nature;
+        }
+
+        function saveGratitude() {
+            appData.gratitude.self = document.getElementById('gratitudeSelf').value;
+            appData.gratitude.others = document.getElementById('gratitudeOthers').value;
+            appData.gratitude.nature = document.getElementById('gratitudeNature').value;
+            Store.saveData(appData);
+            updateProgress();
+        }
+
+        // ===== Progress & Completion =====
+        function updateProgress() {
+            let completed = 0;
+            let total = 0;
+            
+            // Habits: 每个习惯占15%
+            const habitProgress = appData.habits.filter(h => h.completed).length / appData.habits.length;
+            completed += habitProgress * 45;
+            total += 45;
+            
+            // Success: 至少1条占25%
+            const successProgress = Math.min(appData.successList.length, 1);
+            completed += successProgress * 25;
+            total += 25;
+            
+            // Gratitude: 每个非空占10%
+            const gratitudeFields = [appData.gratitude.self, appData.gratitude.others, appData.gratitude.nature];
+            const gratitudeProgress = gratitudeFields.filter(f => f.trim()).length / 3;
+            completed += gratitudeProgress * 30;
+            total += 30;
+            
+            const percentage = Math.round((completed / total) * 100);
+            
+            // Update ring
+            const circle = document.getElementById('progressCircle');
+            const circumference = 2 * Math.PI * 36;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+            
+            // Update text
+            document.getElementById('progressText').textContent = percentage + '%';
+        }
+
+        function completeReview() {
+            appData.completed = true;
+            Store.saveData(appData);
+            
+            // Update stats
+            document.getElementById('statHabits').textContent = 
+                appData.habits.filter(h => h.completed).length;
+            document.getElementById('statSuccess').textContent = appData.successList.length;
+            
+            const g = appData.gratitude;
+            let gratitudeCount = 0;
+            if (g.self.trim()) gratitudeCount++;
+            if (g.others.trim()) gratitudeCount++;
+            if (g.nature.trim()) gratitudeCount++;
+            document.getElementById('statGratitude').textContent = gratitudeCount;
+            
+            // Show celebration
+            const overlay = document.getElementById('celebrationOverlay');
+            overlay.classList.add('active');
+            
+            // Start particle animation
+            initCelebrationParticles();
+        }
+
+        function closeCelebration() {
+            document.getElementById('celebrationOverlay').classList.remove('active');
+        }
+
+        // ===== Celebration Particles =====
+        function initCelebrationParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const colors = ['#e8a87c', '#f4d03f', '#ff9f7f', '#7fb069', '#f5e6d3'];
+            
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10 - 5,
+                    life: 1,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 4 + 2
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.2; // gravity
+                    p.life -= 0.008;
+                    p.size *= 0.99;
+                    
+                    if (p.life > 0) {
+                        ctx.globalAlpha = p.life;
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+                
+                if (particles.some(p => p.life > 0)) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            animate();
+        }
+
+        // ===== Utilities =====
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // ===== Start =====
+        init();
+    </script>
+</body>
+</html>
