@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>拾光复盘 - 拾起光阴，与美好的自己相遇</title>
+    <title>拾光复盘 - 与美好的自己相遇</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -82,24 +82,62 @@
 
         .brand {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--warm-primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             opacity: 0;
             animation: fadeInDown 1s var(--ease-out-expo) forwards;
+            text-shadow: 0 0 20px rgba(232, 168, 124, 0.3);
+        }
+
+        .brand-subtitle {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--warm-primary-light);
+            margin-bottom: 0.6rem;
+            opacity: 0;
+            animation: fadeInDown 1s var(--ease-out-expo) 0.2s forwards;
+            letter-spacing: 0.1em;
+        }
+
+        .brand-quote {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--warm-text-muted);
+            font-style: italic;
+            max-width: 90%;
+            margin: 0 auto;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInDown 1s var(--ease-out-expo) 0.4s forwards;
+        }
+
+        .brand-quote::before {
+            content: """“""";
+            color: var(--warm-primary);
+            font-size: 1.2rem;
+            margin-right: 0.2rem;
+        }
+
+        .brand-quote::after {
+            content: """”""";
+            color: var(--warm-primary);
+            font-size: 1.2rem;
+            margin-left: 0.2rem;
         }
 
         .date-display {
             font-size: 0.9rem;
             color: var(--warm-text-muted);
+            margin-top: 1rem;
             opacity: 0;
-            animation: fadeInDown 1s var(--ease-out-expo) 0.2s forwards;
+            animation: fadeInDown 1s var(--ease-out-expo) 0.6s forwards;
         }
 
         .progress-container {
             margin-top: 1.5rem;
             opacity: 0;
-            animation: fadeInUp 1s var(--ease-out-expo) 0.4s forwards;
+            animation: fadeInUp 1s var(--ease-out-expo) 0.8s forwards;
         }
 
         .progress-ring {
@@ -163,9 +201,9 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .section:nth-child(1) { animation-delay: 0.3s; }
-        .section:nth-child(2) { animation-delay: 0.5s; }
-        .section:nth-child(3) { animation-delay: 0.7s; }
+        .section:nth-child(1) { animation-delay: 0.5s; }
+        .section:nth-child(2) { animation-delay: 0.7s; }
+        .section:nth-child(3) { animation-delay: 0.9s; }
 
         .section-header {
             display: flex;
@@ -785,7 +823,7 @@
             margin-top: 2rem;
             text-align: center;
             opacity: 0;
-            animation: fadeInUp 1s var(--ease-out-expo) 1s forwards;
+            animation: fadeInUp 1s var(--ease-out-expo) 1.2s forwards;
         }
 
         .btn-complete {
@@ -978,7 +1016,9 @@
 
         /* ===== Responsive ===== */
         @media (max-width: 480px) {
-            .brand { font-size: 1.6rem; }
+            .brand { font-size: 1.8rem; }
+            .brand-subtitle { font-size: 0.95rem; }
+            .brand-quote { font-size: 0.75rem; }
             .section { padding: 1.4rem; }
             .success-input-wrapper { flex-direction: column; }
             .btn-add { width: 100%; }
@@ -1008,7 +1048,9 @@
 
     <!-- Header -->
     <header class="header">
-        <h1 class="brand">星夜复盘</h1>
+        <h1 class="brand">拾光复盘</h1>
+        <div class="brand-subtitle">拾起光阴，与美好的自己相遇</div>
+        <div class="brand-quote">每一个不曾起舞的日子，都是对生命的辜负。——但每一个被看见的日子，都会成为照亮未来的光。</div>
         <div class="date-display" id="dateDisplay">载入中...</div>
         <div class="progress-container">
             <div class="progress-ring">
@@ -1499,7 +1541,7 @@
             const g = appData.gratitude;
             let gratitudeCount = 0;
             if (g.self.trim()) gratitudeCount++;
-            if (g.others.trim()) gratitudeCount++;
+            if (g.gothers.trim()) gratitudeCount++;
             if (g.nature.trim()) gratitudeCount++;
             document.getElementById('statGratitude').textContent = gratitudeCount;
             
