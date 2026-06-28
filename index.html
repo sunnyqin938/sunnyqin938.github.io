@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <style>
-        /* ===== CSS Variables ===== */
         :root {
             --warm-bg: #1a1512;
             --warm-surface: #2d2420;
@@ -21,22 +20,14 @@
             --warm-text-muted: #a89080;
             --warm-success: #7fb069;
             --warm-border: rgba(232, 168, 124, 0.15);
-            
             --font-display: 'ZCOOL XiaoWei', serif;
             --font-body: 'Noto Serif SC', serif;
-            
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-in-out-sine: cubic-bezier(0.37, 0, 0.63, 1);
             --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
             --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: var(--font-body);
             background: var(--warm-bg);
@@ -45,1014 +36,274 @@
             line-height: 1.8;
             overflow-x: hidden;
         }
-
-        /* ===== Background Animation ===== */
-        .bg-stars {
+        .bg-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1s ease;
         }
-
-        .star {
+        .bg-image.dark-theme { background-image: url('dark/pexels-eberhardgross-1417651.jpg'); }
+        .bg-image.dark-theme::before {
+            content: '';
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--warm-primary);
-            border-radius: 50%;
-            opacity: 0;
-            animation: twinkle 4s var(--ease-in-out-sine) infinite;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26, 21, 18, 0.5) 0%, rgba(45, 36, 32, 0.6) 100%), radial-gradient(ellipse at center, transparent 0%, rgba(26, 21, 18, 0.2) 100%);
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.2); }
-        }
-
-        /* ===== Header ===== */
-        .header {
-            position: relative;
-            z-index: 10;
-            padding: 2rem 1.5rem 1.5rem;
-            text-align: center;
-        }
-
-        .brand {
-            font-family: var(--font-display);
-            font-size: 2.2rem;
-            color: var(--warm-primary);
-            margin-bottom: 0.8rem;
-            opacity: 0;
-            animation: fadeInDown 1s var(--ease-out-expo) forwards;
-            text-shadow: 0 0 20px rgba(232, 168, 124, 0.3);
-        }
-
-        .brand-subtitle {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            color: var(--warm-primary-light);
-            margin-bottom: 0.6rem;
-            opacity: 0;
-            animation: fadeInDown 1s var(--ease-out-expo) 0.2s forwards;
-            letter-spacing: 0.1em;
-        }
-
-        .brand-quote {
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            color: var(--warm-text-muted);
-            font-style: italic;
-            max-width: 90%;
-            margin: 0 auto;
-            line-height: 1.6;
-            opacity: 0;
-            animation: fadeInDown 1s var(--ease-out-expo) 0.4s forwards;
-        }
-
-        .brand-quote::before {
-            content: """“""";
-            color: var(--warm-primary);
-            font-size: 1.2rem;
-            margin-right: 0.2rem;
-        }
-
-        .brand-quote::after {
-            content: """”""";
-            color: var(--warm-primary);
-            font-size: 1.2rem;
-            margin-left: 0.2rem;
-        }
-
-        .date-display {
-            font-size: 0.9rem;
-            color: var(--warm-text-muted);
-            margin-top: 1rem;
-            opacity: 0;
-            animation: fadeInDown 1s var(--ease-out-expo) 0.6s forwards;
-        }
-
-        .progress-container {
-            margin-top: 1.5rem;
-            opacity: 0;
-            animation: fadeInUp 1s var(--ease-out-expo) 0.8s forwards;
-        }
-
-        .progress-ring {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .progress-ring svg {
-            transform: rotate(-90deg);
-        }
-
-        .progress-ring-bg {
-            fill: none;
-            stroke: var(--warm-surface-light);
-            stroke-width: 4;
-        }
-
-        .progress-ring-fill {
-            fill: none;
-            stroke: var(--warm-primary);
-            stroke-width: 4;
-            stroke-linecap: round;
-            stroke-dasharray: 226;
-            stroke-dashoffset: 226;
-            transition: stroke-dashoffset 0.8s var(--ease-out-expo);
-            filter: drop-shadow(0 0 6px rgba(232, 168, 124, 0.4));
-        }
-
-        .progress-text {
+        .bg-image.bright-theme { background-image: url('bright/pexels-124357283-9962450.jpg'); }
+        .bg-image.bright-theme::before {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--warm-primary);
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26, 21, 18, 0.35) 0%, rgba(45, 36, 32, 0.45) 100%), radial-gradient(ellipse at center, transparent 0%, rgba(26, 21, 18, 0.15) 100%);
         }
-
-        /* ===== Main Container ===== */
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 0 1.5rem 3rem;
-        }
-
-        /* ===== Section Cards ===== */
-        .section {
-            background: var(--warm-surface);
-            border: 1px solid var(--warm-border);
-            border-radius: 24px;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s var(--ease-out-expo) forwards;
-            backdrop-filter: blur(10px);
+        .theme-switcher {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.4rem;
+            background: rgba(45, 36, 32, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 168, 124, 0.2);
+            border-radius: 100px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
-        .section:nth-child(1) { animation-delay: 0.5s; }
-        .section:nth-child(2) { animation-delay: 0.7s; }
-        .section:nth-child(3) { animation-delay: 0.9s; }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            background: var(--warm-surface-light);
-            border: 1px solid var(--warm-border);
-            transition: all 0.3s var(--ease-elastic);
-        }
-
-        .section:hover .section-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 20px rgba(232, 168, 124, 0.3);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            color: var(--warm-primary);
-        }
-
-        .section-subtitle {
-            font-size: 0.8rem;
-            color: var(--warm-text-muted);
-            margin-top: 0.2rem;
-        }
-
-        /* ===== Habits Section ===== */
-        .habits-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .habit-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 1.2rem;
-            background: var(--warm-surface-light);
-            border-radius: 16px;
-            border: 1px solid var(--warm-border);
-            transition: all 0.3s var(--ease-smooth);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .habit-item:hover {
-            transform: translateX(4px);
-            border-color: rgba(232, 168, 124, 0.3);
-        }
-
-        .habit-item.completed {
-            background: rgba(127, 176, 105, 0.1);
-            border-color: rgba(127, 176, 105, 0.3);
-        }
-
-        .habit-item.custom .habit-icon {
-            background: rgba(232, 168, 124, 0.2);
-        }
-
-        .habit-info {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .habit-icon {
+        .theme-btn {
             width: 36px;
             height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            background: var(--warm-surface);
-            transition: all 0.3s var(--ease-elastic);
-        }
-
-        .habit-item.completed .habit-icon {
-            background: var(--warm-success);
-            transform: scale(1.1);
-        }
-
-        .habit-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .habit-name {
-            font-weight: 600;
-            color: var(--warm-text);
-            transition: color 0.3s;
-        }
-
-        .habit-item.completed .habit-name {
-            color: var(--warm-success);
-            text-decoration: line-through;
-            opacity: 0.8;
-        }
-
-        .habit-streak {
-            font-size: 0.75rem;
-            color: var(--warm-text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .habit-streak::before {
-            content: "🔥";
-            font-size: 0.8rem;
-        }
-
-        .habit-toggle {
-            width: 52px;
-            height: 32px;
-            background: var(--warm-surface);
-            border-radius: 16px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.4s var(--ease-elastic);
-            border: 2px solid var(--warm-border);
-        }
-
-        .habit-toggle::after {
-            content: "";
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: var(--warm-text-muted);
             border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: all 0.4s var(--ease-elastic);
-        }
-
-        .habit-item.completed .habit-toggle {
-            background: var(--warm-success);
-            border-color: var(--warm-success);
-        }
-
-        .habit-item.completed .habit-toggle::after {
-            transform: translateX(20px);
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .habit-delete {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            color: var(--warm-text-muted);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-            margin-left: 0.5rem;
-        }
-
-        .habit-delete:hover {
-            background: rgba(244, 67, 67, 0.1);
-            color: #ff6b6b;
-            transform: rotate(90deg);
-        }
-
-        /* Add Habit Button */
-        .add-habit-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: transparent;
-            border: 2px dashed var(--warm-border);
-            border-radius: 16px;
-            color: var(--warm-text-muted);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s var(--ease-smooth);
-            margin-top: 0.5rem;
-        }
-
-        .add-habit-btn:hover {
-            border-color: var(--warm-primary);
-            color: var(--warm-primary);
-            background: rgba(232, 168, 124, 0.05);
-        }
-
-        .add-habit-btn .plus-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid currentColor;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            transition: transform 0.3s var(--ease-elastic);
-        }
-
-        .add-habit-btn:hover .plus-icon {
-            transform: rotate(90deg) scale(1.1);
-        }
-
-        /* Add Habit Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 21, 18, 0.9);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background: var(--warm-surface);
-            border: 1px solid var(--warm-border);
-            border-radius: 24px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 400px;
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.3s var(--ease-out-expo);
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-title {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            color: var(--warm-primary);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .modal-input-group {
-            margin-bottom: 1rem;
-        }
-
-        .modal-label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--warm-text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 0.9rem 1.2rem;
-            background: var(--warm-surface-light);
-            border: 1px solid var(--warm-border);
-            border-radius: 12px;
-            color: var(--warm-text);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .modal-input:focus {
-            border-color: var(--warm-primary);
-            box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1);
-        }
-
-        .icon-selector {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-        }
-
-        .icon-option {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            background: var(--warm-surface-light);
             border: 2px solid transparent;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .icon-option:hover {
-            transform: scale(1.1);
-            border-color: var(--warm-border);
-        }
-
-        .icon-option.selected {
-            border-color: var(--warm-primary);
-            background: rgba(232, 168, 124, 0.2);
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 1.5rem;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 0.9rem;
-            border-radius: 12px;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            cursor: pointer;
             transition: all 0.3s;
-        }
-
-        .modal-btn-primary {
-            background: var(--warm-primary);
-            color: var(--warm-bg);
-            border: none;
-            font-weight: 600;
-        }
-
-        .modal-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(232, 168, 124, 0.3);
-        }
-
-        .modal-btn-secondary {
-            background: transparent;
-            color: var(--warm-text-muted);
-            border: 1px solid var(--warm-border);
-        }
-
-        .modal-btn-secondary:hover {
-            border-color: var(--warm-text);
-            color: var(--warm-text);
-        }
-
-        /* Particle burst animation */
-        .habit-particles {
-            position: absolute;
-            pointer-events: none;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--warm-glow);
-            border-radius: 50%;
-            opacity: 0;
-        }
-
-        @keyframes particleBurst {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--tx), var(--ty)) scale(0);
-                opacity: 0;
-            }
-        }
-
-        /* ===== Success Diary Section ===== */
-        .success-input-area {
-            margin-bottom: 1rem;
-        }
-
-        .input-hint {
-            font-size: 0.85rem;
-            color: var(--warm-text-muted);
-            margin-bottom: 0.8rem;
-            font-style: italic;
-        }
-
-        .success-input-wrapper {
-            display: flex;
-            gap: 0.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .text-input {
-            flex: 1;
-            padding: 1rem 1.2rem;
-            background: var(--warm-surface-light);
-            border: 1px solid var(--warm-border);
-            border-radius: 14px;
-            color: var(--warm-text);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s var(--ease-smooth);
-        }
-
-        .text-input:focus {
-            border-color: var(--warm-primary);
-            box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .text-input::placeholder {
-            color: var(--warm-text-muted);
-        }
-
-        .btn-add {
-            padding: 1rem 1.5rem;
-            background: var(--warm-primary);
-            color: var(--warm-bg);
-            border: none;
-            border-radius: 14px;
-            font-family: var(--font-body);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s var(--ease-elastic);
-            white-space: nowrap;
-        }
-
-        .btn-add:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(232, 168, 124, 0.4);
-        }
-
-        .btn-add:active {
-            transform: scale(0.95);
-        }
-
-        .success-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-
-        .success-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.9rem 1.2rem;
-            background: rgba(232, 168, 124, 0.08);
-            border-radius: 12px;
-            border-left: 3px solid var(--warm-primary);
-            animation: slideIn 0.4s var(--ease-out-expo);
-            transition: all 0.3s;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .success-text {
-            color: var(--warm-text);
-            font-size: 0.95rem;
-        }
-
-        .success-delete {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             background: transparent;
-            border: none;
-            color: var(--warm-text-muted);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.2rem;
         }
-
-        .success-delete:hover {
-            background: rgba(244, 67, 67, 0.1);
-            color: #ff6b6b;
-            transform: rotate(90deg);
-        }
-
-        .import-hint {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            background: rgba(232, 168, 124, 0.05);
-            border-radius: 10px;
-            font-size: 0.8rem;
-            color: var(--warm-text-muted);
-            display: none;
-        }
-
-        .import-hint.has-content {
-            display: block;
-            animation: fadeIn 0.4s;
-        }
-
-        .import-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.3rem 0.8rem;
-            background: var(--warm-surface);
-            border-radius: 20px;
-            margin: 0.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid var(--warm-border);
-        }
-
-        .import-tag:hover {
-            background: var(--warm-primary);
-            color: var(--warm-bg);
-            transform: translateY(-2px);
-        }
-
-        /* ===== Gratitude Section ===== */
-        .gratitude-grid {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .gratitude-card {
-            position: relative;
-            padding: 1.2rem;
-            background: var(--warm-surface-light);
-            border-radius: 16px;
-            border: 1px solid var(--warm-border);
-            transition: all 0.4s var(--ease-smooth);
-        }
-
-        .gratitude-card:focus-within {
-            transform: translateY(-4px);
-            border-color: var(--warm-primary);
-            box-shadow: 0 8px 24px rgba(232, 168, 124, 0.15);
-        }
-
-        .gratitude-label {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.9rem;
-            color: var(--warm-primary);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-        }
-
-        .gratitude-input {
-            width: 100%;
-            padding: 0.8rem;
-            background: transparent;
-            border: none;
-            color: var(--warm-text);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            resize: none;
-            outline: none;
-            min-height: 60px;
-        }
-
-        .gratitude-input::placeholder {
-            color: var(--warm-text-muted);
-            opacity: 0.6;
-        }
-
-        .gratitude-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(232, 168, 124, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s;
-            pointer-events: none;
-        }
-
-        .gratitude-card:focus-within .gratitude-glow {
-            width: 200%;
-            height: 200%;
-            opacity: 0;
-        }
-
-        /* ===== Complete Button ===== */
-        .complete-section {
-            margin-top: 2rem;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 1s var(--ease-out-expo) 1.2s forwards;
-        }
-
-        .btn-complete {
-            position: relative;
-            padding: 1.2rem 3rem;
-            background: linear-gradient(135deg, var(--warm-primary) 0%, var(--warm-accent) 100%);
-            color: var(--warm-bg);
-            border: none;
-            border-radius: 30px;
-            font-family: var(--font-display);
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.4s var(--ease-elastic);
-            box-shadow: 0 4px 20px rgba(232, 168, 124, 0.3);
-        }
-
-        .btn-complete:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 30px rgba(232, 168, 124, 0.5);
-        }
-
-        .btn-complete:active {
-            transform: scale(0.98);
-        }
-
-        .btn-complete::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .btn-complete:hover::before {
-            left: 100%;
-        }
-
-        .save-status {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--warm-text-muted);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .save-status.show {
-            opacity: 1;
-        }
-
-        .save-status.saved {
-            color: var(--warm-success);
-        }
-
-        /* ===== Celebration Overlay ===== */
-        .celebration-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 21, 18, 0.95);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .celebration-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .celebration-content {
-            text-align: center;
-            transform: scale(0.8);
-            transition: transform 0.6s var(--ease-elastic);
-        }
-
-        .celebration-overlay.active .celebration-content {
-            transform: scale(1);
-        }
-
-        .celebration-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .celebration-title {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            color: var(--warm-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .celebration-subtitle {
-            color: var(--warm-text-muted);
-            margin-bottom: 2rem;
-        }
-
-        .celebration-stats {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--warm-glow);
-            font-family: var(--font-display);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--warm-text-muted);
-        }
-
-        .btn-close-celebration {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: 2px solid var(--warm-primary);
-            color: var(--warm-primary);
-            border-radius: 25px;
-            font-family: var(--font-body);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-close-celebration:hover {
-            background: var(--warm-primary);
-            color: var(--warm-bg);
-        }
-
-        /* Canvas for particles */
-        #particle-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        /* ===== Animations ===== */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 480px) {
-            .brand { font-size: 1.8rem; }
-            .brand-subtitle { font-size: 0.95rem; }
-            .brand-quote { font-size: 0.75rem; }
-            .section { padding: 1.4rem; }
-            .success-input-wrapper { flex-direction: column; }
-            .btn-add { width: 100%; }
-            .gratitude-grid { grid-template-columns: 1fr; }
-            .modal-content { padding: 1.5rem; }
-        }
-
-        /* ===== Scrollbar ===== */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--warm-bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--warm-surface-light);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--warm-primary);
-        }
+        .theme-btn:hover { transform: scale(1.1); }
+        .theme-btn.active { border-color: var(--warm-primary); background: rgba(232, 168, 124, 0.2); }
+        .bg-stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .star { position: absolute; width: 2px; height: 2px; background: var(--warm-primary); border-radius: 50%; opacity: 0; animation: twinkle 4s var(--ease-in-out-sine) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        .header { position: relative; z-index: 10; padding: 2rem 1.5rem 1.5rem; text-align: center; }
+        .brand { font-family: var(--font-display); font-size: 2.2rem; color: var(--warm-primary); margin-bottom: 0.8rem; opacity: 0; animation: fadeInDown 1s var(--ease-out-expo) forwards; text-shadow: 0 0 20px rgba(232, 168, 124, 0.3); }
+        .brand-subtitle { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary-light); margin-bottom: 0.6rem; opacity: 0; animation: fadeInDown 1s var(--ease-out-expo) 0.2s forwards; letter-spacing: 0.1em; }
+        .brand-quote { font-family: var(--font-body); font-size: 0.85rem; color: var(--warm-text-muted); font-style: italic; max-width: 90%; margin: 0 auto 0.6rem; line-height: 1.6; opacity: 0; animation: fadeInDown 1s var(--ease-out-expo) 0.4s forwards; }
+        .date-display { font-size: 0.9rem; color: var(--warm-text-muted); margin-top: 1rem; }
+        .view-switcher { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem; padding: 0.5rem; background: rgba(45, 36, 32, 0.6); backdrop-filter: blur(20px); border-radius: 100px; border: 1px solid rgba(232, 168, 124, 0.2); width: fit-content; margin-left: auto; margin-right: auto; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .view-btn { padding: 0.6rem 1.5rem; background: transparent; border: none; border-radius: 100px; color: var(--warm-text-muted); font-family: var(--font-body); font-size: 0.9rem; cursor: pointer; transition: all 0.3s var(--ease-smooth); }
+        .view-btn.active { background: var(--warm-primary); color: var(--warm-bg); font-weight: 600; }
+        .view-btn:hover:not(.active) { color: var(--warm-text); }
+        .progress-container { margin-top: 1.5rem; opacity: 0; animation: fadeInUp 1s var(--ease-out-expo) 0.8s forwards; }
+        .progress-ring { width: 80px; height: 80px; margin: 0 auto; position: relative; }
+        .progress-ring svg { transform: rotate(-90deg); }
+        .progress-ring-bg { fill: none; stroke: var(--warm-surface-light); stroke-width: 4; }
+        .progress-ring-fill { fill: none; stroke: var(--warm-primary); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 226; stroke-dashoffset: 226; transition: stroke-dashoffset 0.8s var(--ease-out-expo); filter: drop-shadow(0 0 6px rgba(232, 168, 124, 0.4)); }
+        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.2rem; font-weight: 600; color: var(--warm-primary); }
+        .container { position: relative; z-index: 10; max-width: 600px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+        .section { background: rgba(45, 36, 32, 0.6); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(232, 168, 124, 0.2); border-radius: 24px; padding: 1.8rem; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s var(--ease-out-expo) forwards; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.4s var(--ease-smooth); }
+        .section:hover { background: rgba(45, 36, 32, 0.7); border-color: rgba(232, 168, 124, 0.3); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+        .section:nth-child(1) { animation-delay: 0.5s; }
+        .section-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
+        .section-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--warm-surface-light); border: 1px solid var(--warm-border); transition: all 0.3s var(--ease-elastic); }
+        .section:hover .section-icon { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 20px rgba(232, 168, 124, 0.3); }
+        .section-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--warm-primary); }
+        .section-subtitle { font-size: 0.8rem; color: var(--warm-text-muted); margin-top: 0.2rem; }
+        .habits-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .habit-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.2rem; background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(232, 168, 124, 0.15); transition: all 0.3s var(--ease-smooth); cursor: pointer; position: relative; }
+        .habit-item:hover { transform: translateX(4px); background: rgba(61, 49, 41, 0.7); border-color: rgba(232, 168, 124, 0.3); }
+        .habit-item.completed { background: rgba(127, 176, 105, 0.1); border-color: rgba(127, 176, 105, 0.3); }
+        .habit-info { display: flex; align-items: center; gap: 0.8rem; }
+        .habit-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; background: var(--warm-surface); transition: all 0.3s var(--ease-elastic); }
+        .habit-item.completed .habit-icon { background: var(--warm-success); transform: scale(1.1); }
+        .habit-name { font-weight: 600; color: var(--warm-text); transition: color 0.3s; }
+        .habit-item.completed .habit-name { color: var(--warm-success); text-decoration: line-through; opacity: 0.8; }
+        .habit-streak { font-size: 0.75rem; color: var(--warm-text-muted); display: flex; align-items: center; gap: 0.3rem; }
+        .habit-toggle { width: 52px; height: 32px; background: var(--warm-surface); border-radius: 16px; position: relative; cursor: pointer; transition: all 0.4s var(--ease-elastic); border: 2px solid var(--warm-border); }
+        .habit-toggle::after { content: ''; position: absolute; width: 24px; height: 24px; background: var(--warm-text-muted); border-radius: 50%; top: 2px; left: 2px; transition: all 0.4s var(--ease-elastic); }
+        .habit-item.completed .habit-toggle { background: var(--warm-success); border-color: var(--warm-success); }
+        .habit-item.completed .habit-toggle::after { transform: translateX(20px); background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .habit-delete { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--warm-text-muted); cursor: pointer; transition: all 0.3s; font-size: 1.1rem; margin-left: 0.5rem; }
+        .habit-delete:hover { background: rgba(244, 67, 67, 0.1); color: #ff6b6b; transform: rotate(90deg); }
+        .add-habit-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: transparent; border: 2px dashed var(--warm-border); border-radius: 16px; color: var(--warm-text-muted); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; transition: all 0.3s var(--ease-smooth); margin-top: 0.5rem; }
+        .add-habit-btn:hover { border-color: var(--warm-primary); color: var(--warm-primary); background: rgba(232, 168, 124, 0.05); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26, 21, 18, 0.9); backdrop-filter: blur(8px); z-index: 100; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: rgba(45, 36, 32, 0.85); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%); border: 1px solid rgba(232, 168, 124, 0.25); border-radius: 24px; padding: 2rem; width: 90%; max-width: 400px; transform: scale(0.9) translateY(20px); transition: transform 0.3s var(--ease-out-expo); box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+        .modal-title { font-family: var(--font-display); font-size: 1.4rem; color: var(--warm-primary); margin-bottom: 1.5rem; text-align: center; }
+        .modal-input-group { margin-bottom: 1rem; }
+        .modal-label { display: block; font-size: 0.85rem; color: var(--warm-text-muted); margin-bottom: 0.5rem; }
+        .modal-input { width: 100%; padding: 0.9rem 1.2rem; background: var(--warm-surface-light); border: 1px solid var(--warm-border); border-radius: 12px; color: var(--warm-text); font-family: var(--font-body); font-size: 1rem; outline: none; transition: all 0.3s; }
+        .modal-input:focus { border-color: var(--warm-primary); box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1); }
+        .icon-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .icon-option { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; background: var(--warm-surface-light); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; }
+        .icon-option:hover { transform: scale(1.1); border-color: var(--warm-border); }
+        .icon-option.selected { border-color: var(--warm-primary); background: rgba(232, 168, 124, 0.2); }
+        .modal-buttons { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+        .modal-btn { flex: 1; padding: 0.9rem; border-radius: 12px; font-family: var(--font-body); font-size: 1rem; cursor: pointer; transition: all 0.3s; }
+        .modal-btn-primary { background: var(--warm-primary); color: var(--warm-bg); border: none; font-weight: 600; }
+        .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(232, 168, 124, 0.3); }
+        .modal-btn-secondary { background: transparent; color: var(--warm-text-muted); border: 1px solid var(--warm-border); }
+        .modal-btn-secondary:hover { border-color: var(--warm-text); color: var(--warm-text); }
+        .input-hint { font-size: 0.85rem; color: var(--warm-text-muted); margin-bottom: 0.8rem; font-style: italic; }
+        .success-input-wrapper { display: flex; gap: 0.8rem; margin-bottom: 1rem; align-items: center; }
+        .voice-btn { width: 48px; height: 48px; border-radius: 14px; background: var(--warm-surface-light); border: 1px solid var(--warm-border); color: var(--warm-text-muted); font-size: 1.3rem; cursor: pointer; transition: all 0.3s var(--ease-smooth); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .voice-btn:hover { border-color: var(--warm-primary); color: var(--warm-primary); transform: scale(1.05); }
+        .voice-btn.recording { background: rgba(244, 67, 67, 0.2); border-color: #ff6b6b; color: #ff6b6b; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); } 50% { transform: scale(1.05); box-shadow: 0 0 20px 5px rgba(255, 107, 107, 0.2); } }
+        .voice-status { font-size: 0.8rem; color: var(--warm-text-muted); margin-top: 0.5rem; opacity: 0; transition: opacity 0.3s; }
+        .voice-status.show { opacity: 1; }
+        .text-input { flex: 1; padding: 1rem 1.2rem; background: var(--warm-surface-light); border: 1px solid var(--warm-border); border-radius: 14px; color: var(--warm-text); font-family: var(--font-body); font-size: 1rem; outline: none; transition: all 0.3s var(--ease-smooth); }
+        .text-input:focus { border-color: var(--warm-primary); box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1); transform: translateY(-2px); }
+        .btn-add { padding: 1rem 1.5rem; background: var(--warm-primary); color: var(--warm-bg); border: none; border-radius: 14px; font-family: var(--font-body); font-weight: 600; cursor: pointer; transition: all 0.3s var(--ease-elastic); white-space: nowrap; }
+        .btn-add:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(232, 168, 124, 0.4); }
+        .success-list { display: flex; flex-direction: column; gap: 0.6rem; }
+        .success-item { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.2rem; background: rgba(232, 168, 124, 0.08); backdrop-filter: blur(10px); border-radius: 12px; border-left: 3px solid var(--warm-primary); animation: slideIn 0.4s var(--ease-out-expo); transition: all 0.3s; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .success-text { color: var(--warm-text); font-size: 0.95rem; }
+        .success-delete { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--warm-text-muted); cursor: pointer; transition: all 0.3s; font-size: 1.2rem; }
+        .success-delete:hover { background: rgba(244, 67, 67, 0.1); color: #ff6b6b; transform: rotate(90deg); }
+        .import-hint { margin-top: 1rem; padding: 0.8rem; background: rgba(232, 168, 124, 0.08); backdrop-filter: blur(10px); border-radius: 10px; font-size: 0.8rem; color: var(--warm-text-muted); display: none; }
+        .import-hint.has-content { display: block; animation: fadeIn 0.4s; }
+        .import-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem; background: var(--warm-surface); border-radius: 20px; margin: 0.2rem; cursor: pointer; transition: all 0.3s; border: 1px solid var(--warm-border); }
+        .import-tag:hover { background: var(--warm-primary); color: var(--warm-bg); transform: translateY(-2px); }
+        .gratitude-grid { display: grid; gap: 1rem; }
+        .gratitude-card { position: relative; padding: 1.2rem; background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(232, 168, 124, 0.15); transition: all 0.4s var(--ease-smooth); }
+        .gratitude-card:focus-within { transform: translateY(-4px); background: rgba(61, 49, 41, 0.7); border-color: var(--warm-primary); box-shadow: 0 8px 24px rgba(232, 168, 124, 0.15); }
+        .gratitude-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--warm-primary); margin-bottom: 0.8rem; font-weight: 600; }
+        .gratitude-label-left { display: flex; align-items: center; gap: 0.6rem; }
+        .gratitude-voice-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--warm-surface); border: 1px solid var(--warm-border); color: var(--warm-text-muted); font-size: 14px; cursor: pointer; transition: all 0.3s var(--ease-smooth); display: flex; align-items: center; justify-content: center; }
+        .gratitude-voice-btn:hover { border-color: var(--warm-primary); color: var(--warm-primary); transform: scale(1.05); }
+        .gratitude-voice-btn.recording { background: rgba(244, 67, 67, 0.2); border-color: #ff6b6b; color: #ff6b6b; animation: pulse 1.5s ease-in-out infinite; }
+        .gratitude-input { width: 100%; padding: 0.8rem; background: transparent; border: none; color: var(--warm-text); font-family: var(--font-body); font-size: 1rem; resize: none; outline: none; min-height: 60px; }
+        .gratitude-input::placeholder { color: var(--warm-text-muted); opacity: 0.6; }
+        .complete-section { margin-top: 2rem; text-align: center; opacity: 0; animation: fadeInUp 1s var(--ease-out-expo) 1.2s forwards; }
+        .btn-complete { position: relative; padding: 1.2rem 3rem; background: linear-gradient(135deg, var(--warm-primary) 0%, var(--warm-accent) 100%); color: var(--warm-bg); border: none; border-radius: 30px; font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; cursor: pointer; overflow: hidden; transition: all 0.4s var(--ease-elastic); box-shadow: 0 4px 20px rgba(232, 168, 124, 0.3); }
+        .btn-complete:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(232, 168, 124, 0.5); }
+        .btn-complete:active { transform: scale(0.98); }
+        .save-status { margin-top: 1rem; font-size: 0.85rem; color: var(--warm-text-muted); opacity: 0; transition: opacity 0.3s; }
+        .save-status.show { opacity: 1; }
+        .save-status.saved { color: var(--warm-success); }
+        .celebration-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26, 21, 18, 0.95); z-index: 1000; display: none; align-items: center; justify-content: center; flex-direction: column; opacity: 0; transition: opacity 0.5s; }
+        .celebration-overlay.active { display: flex; opacity: 1; }
+        .celebration-content { text-align: center; transform: scale(0.8); transition: transform 0.6s var(--ease-elastic); }
+        .celebration-overlay.active .celebration-content { transform: scale(1); }
+        .celebration-icon { font-size: 4rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .celebration-title { font-family: var(--font-display); font-size: 2rem; color: var(--warm-primary); margin-bottom: 0.5rem; }
+        .celebration-subtitle { color: var(--warm-text-muted); margin-bottom: 2rem; }
+        .celebration-stats { display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem; }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; color: var(--warm-glow); font-family: var(--font-display); }
+        .stat-label { font-size: 0.85rem; color: var(--warm-text-muted); }
+        .btn-close-celebration { padding: 1rem 2rem; background: transparent; border: 2px solid var(--warm-primary); color: var(--warm-primary); border-radius: 25px; font-family: var(--font-body); cursor: pointer; transition: all 0.3s; }
+        .btn-close-celebration:hover { background: var(--warm-primary); color: var(--warm-bg); }
+        #particle-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @media (max-width: 480px) { .brand { font-size: 1.8rem; } .brand-subtitle { font-size: 0.95rem; } .brand-quote { font-size: 0.75rem; } .section { padding: 1.4rem; } .success-input-wrapper { flex-direction: column; } .btn-add { width: 100%; } .gratitude-grid { grid-template-columns: 1fr; } .modal-content { padding: 1.5rem; } }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--warm-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--warm-surface-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--warm-primary); }
+        .backup-section { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--warm-border); display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+        .backup-btn { padding: 0.6rem 1.2rem; background: var(--warm-surface-light); border: 1px solid var(--warm-border); border-radius: 10px; color: var(--warm-text-muted); font-family: var(--font-body); font-size: 0.85rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 0.4rem; }
+        .backup-btn:hover { border-color: var(--warm-primary); color: var(--warm-primary); transform: translateY(-2px); }
+        .backup-input { display: none; }
+        .weekly-section { display: none; }
+        .weekly-section.active { display: block; }
+        .monthly-section { display: none; }
+        .monthly-section.active { display: block; }
+        .weekly-header, .monthly-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .weekly-nav, .monthly-nav { display: flex; align-items: center; gap: 1rem; }
+        .weekly-nav-btn, .monthly-nav-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--warm-surface-light); border: 1px solid var(--warm-border); color: var(--warm-text); font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .weekly-nav-btn:hover, .monthly-nav-btn:hover { background: var(--warm-primary); color: var(--warm-bg); }
+        .weekly-date-range, .monthly-date-range { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); }
+        .weekly-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .weekly-stat-card { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.2rem; text-align: center; transition: all 0.3s; }
+        .weekly-stat-card:hover { transform: translateY(-2px); background: rgba(61, 49, 41, 0.7); border-color: var(--warm-primary); }
+        .weekly-stat-value { font-family: var(--font-display); font-size: 2rem; color: var(--warm-primary); margin-bottom: 0.3rem; }
+        .weekly-stat-label { font-size: 0.8rem; color: var(--warm-text-muted); }
+        .weekly-chart { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .weekly-chart-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); margin-bottom: 1rem; }
+        .habit-trend-chart { display: flex; align-items: flex-end; justify-content: space-around; height: 120px; gap: 0.5rem; }
+        .trend-day { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .trend-bar { width: 100%; background: linear-gradient(to top, var(--warm-primary), var(--warm-primary-light)); border-radius: 6px 6px 0 0; transition: all 0.5s var(--ease-out-expo); min-height: 4px; }
+        .trend-day-label { font-size: 0.75rem; color: var(--warm-text-muted); }
+        .weekly-highlights { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .weekly-highlights-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); margin-bottom: 1rem; }
+        .highlight-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .highlight-item { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.8rem; background: rgba(232, 168, 124, 0.08); backdrop-filter: blur(10px); border-radius: 12px; border-left: 3px solid var(--warm-primary); }
+        .highlight-date { font-size: 0.75rem; color: var(--warm-text-muted); white-space: nowrap; }
+        .highlight-text { font-size: 0.9rem; color: var(--warm-text); line-height: 1.5; }
+        .highlight-empty { text-align: center; color: var(--warm-text-muted); font-style: italic; padding: 1rem; }
+        .weekly-summary { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.5rem; }
+        .weekly-summary-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); margin-bottom: 1rem; }
+        .weekly-summary-input { width: 100%; min-height: 100px; padding: 1rem; background: var(--warm-surface); border: 1px solid var(--warm-border); border-radius: 12px; color: var(--warm-text); font-family: var(--font-body); font-size: 1rem; resize: vertical; outline: none; transition: all 0.3s; }
+        .weekly-summary-input:focus { border-color: var(--warm-primary); box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1); }
+        .monthly-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .monthly-stat-card { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.2rem; text-align: center; transition: all 0.3s; }
+        .monthly-stat-card:hover { transform: translateY(-2px); background: rgba(61, 49, 41, 0.7); border-color: var(--warm-primary); }
+        .monthly-stat-value { font-family: var(--font-display); font-size: 2rem; color: var(--warm-primary); margin-bottom: 0.3rem; }
+        .monthly-stat-label { font-size: 0.8rem; color: var(--warm-text-muted); }
+        .monthly-heatmap { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .monthly-heatmap-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); margin-bottom: 1rem; }
+        .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.4rem; }
+        .heatmap-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--warm-text-muted); background: var(--warm-surface); transition: all 0.3s; }
+        .heatmap-day.has-data { background: var(--warm-primary); color: var(--warm-bg); }
+        .heatmap-day.today { border: 2px solid var(--warm-glow); }
+        .heatmap-legend { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem; font-size: 0.75rem; color: var(--warm-text-muted); }
+        .heatmap-legend-box { width: 16px; height: 16px; border-radius: 4px; background: var(--warm-surface); }
+        .heatmap-legend-box.has-data { background: var(--warm-primary); }
+        .monthly-top-habits { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .monthly-top-habits-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); margin-bottom: 1rem; }
+        .top-habit-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .top-habit-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem; background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border-radius: 12px; }
+        .top-habit-rank { width: 28px; height: 28px; border-radius: 50%; background: var(--warm-primary); color: var(--warm-bg); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; }
+        .top-habit-icon { font-size: 1.5rem; }
+        .top-habit-info { flex: 1; }
+        .top-habit-name { font-size: 0.95rem; color: var(--warm-text); }
+        .top-habit-count { font-size: 0.75rem; color: var(--warm-text-muted); }
+        .top-habit-bar { width: 60px; height: 6px; background: var(--warm-surface-light); border-radius: 3px; overflow: hidden; }
+        .top-habit-bar-fill { height: 100%; background: var(--warm-primary); border-radius: 3px; transition: width 0.5s var(--ease-out-expo); }
+        .monthly-summary-goals { display: grid; gap: 1rem; }
+        .monthly-summary-box, .monthly-goals-box { background: rgba(61, 49, 41, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(232, 168, 124, 0.15); border-radius: 16px; padding: 1.5rem; }
+        .monthly-summary-title, .monthly-goals-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm-primary); margin-bottom: 1rem; }
+        .monthly-summary-input, .monthly-goals-input { width: 100%; min-height: 80px; padding: 1rem; background: var(--warm-surface); border: 1px solid var(--warm-border); border-radius: 12px; color: var(--warm-text); font-family: var(--font-body); font-size: 1rem; resize: vertical; outline: none; transition: all 0.3s; }
+        .monthly-summary-input:focus, .monthly-goals-input:focus { border-color: var(--warm-primary); box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.1); }
+        @media (min-width: 640px) { .monthly-summary-goals { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .weekly-stats-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <!-- Background Stars -->
+    <div class="theme-switcher">
+        <button class="theme-btn active" onclick="switchTheme('dark')" title="暗色主题">🌙</button>
+        <button class="theme-btn" onclick="switchTheme('bright')" title="亮色主题">☀️</button>
+    </div>
+    <div class="bg-image dark-theme" id="bgImage"></div>
     <div class="bg-stars" id="bgStars"></div>
-
-    <!-- Header -->
     <header class="header">
         <h1 class="brand">拾光复盘</h1>
         <div class="brand-subtitle">拾起光阴，与美好的自己相遇</div>
         <div class="brand-quote">每一个不曾起舞的日子，都是对生命的辜负。——但每一个被看见的日子，都会成为照亮未来的光。</div>
+        <div class="view-switcher">
+            <button class="view-btn active" onclick="switchView('day')" id="viewDay">日</button>
+            <button class="view-btn" onclick="switchView('week')" id="viewWeek">周</button>
+            <button class="view-btn" onclick="switchView('month')" id="viewMonth">月</button>
+        </div>
         <div class="date-display" id="dateDisplay">载入中...</div>
-        <div class="progress-container">
+        <div class="progress-container" id="dayProgress">
             <div class="progress-ring">
                 <svg width="80" height="80">
                     <circle class="progress-ring-bg" cx="40" cy="40" r="36"></circle>
@@ -1062,94 +313,192 @@
             </div>
         </div>
     </header>
-
-    <!-- Main Content -->
     <main class="container">
-        <!-- Section 1: Habits -->
-        <section class="section" id="habitsSection">
-            <div class="section-header">
-                <div class="section-icon">🌱</div>
-                <div>
-                    <div class="section-title">微习惯养成</div>
-                    <div class="section-subtitle">小坚持，大改变</div>
-                </div>
-            </div>
-            <div class="habits-list" id="habitsList">
-                <!-- Habits injected by JS -->
-            </div>
-            <button class="add-habit-btn" onclick="openAddHabitModal()">
-                <span class="plus-icon">+</span>
-                <span>添加新习惯</span>
-            </button>
-        </section>
-
-        <!-- Section 2: Success Diary -->
-        <section class="section" id="successSection">
-            <div class="section-header">
-                <div class="section-icon">⭐</div>
-                <div>
-                    <div class="section-title">成功日记</div>
-                    <div class="section-subtitle">记录今日值得庆祝的小事</div>
-                </div>
-            </div>
-            <div class="success-input-area">
-                <div class="input-hint">今天，我为自己做到了...</div>
-                <div class="success-input-wrapper">
-                    <input type="text" class="text-input" id="successInput" placeholder="例如：完成了重要的项目报告">
-                    <button class="btn-add" onclick="addSuccess()">添加</button>
-                </div>
-                <div class="import-hint" id="importHint">
-                    从微习惯导入：
-                    <span id="importTags"></span>
-                </div>
-                <div class="success-list" id="successList"></div>
-            </div>
-        </section>
-
-        <!-- Section 3: Gratitude -->
-        <section class="section" id="gratitudeSection">
-            <div class="section-header">
-                <div class="section-icon">🌙</div>
-                <div>
-                    <div class="section-title">感恩日记</div>
-                    <div class="section-subtitle">心怀感激，幸福常在</div>
-                </div>
-            </div>
-            <div class="gratitude-grid">
-                <div class="gratitude-card">
-                    <div class="gratitude-glow"></div>
-                    <div class="gratitude-label">
-                        <span>🌸</span> 感恩自己
+        <div id="dailyView" class="daily-section">
+            <section class="section" id="habitsSection">
+                <div class="section-header">
+                    <div class="section-icon">🌱</div>
+                    <div>
+                        <div class="section-title">微习惯养成</div>
+                        <div class="section-subtitle">小坚持，大改变</div>
                     </div>
-                    <textarea class="gratitude-input" id="gratitudeSelf" placeholder="今天，我欣赏自己的..."></textarea>
                 </div>
-                <div class="gratitude-card">
-                    <div class="gratitude-glow"></div>
-                    <div class="gratitude-label">
-                        <span>💝</span> 感恩他人
+                <div class="habits-list" id="habitsList"></div>
+                <button class="add-habit-btn" onclick="openAddHabitModal()">
+                    <span class="plus-icon">+</span>
+                    <span>添加新习惯</span>
+                </button>
+            </section>
+            <section class="section" id="successSection">
+                <div class="section-header">
+                    <div class="section-icon">⭐</div>
+                    <div>
+                        <div class="section-title">成功日记</div>
+                        <div class="section-subtitle">记录今日值得庆祝的小事</div>
                     </div>
-                    <textarea class="gratitude-input" id="gratitudeOthers" placeholder="感谢_____，因为..."></textarea>
                 </div>
-                <div class="gratitude-card">
-                    <div class="gratitude-glow"></div>
-                    <div class="gratitude-label">
-                        <span>🍃</span> 感恩自然
+                <div class="success-input-area">
+                    <div class="input-hint">今天，我为自己做到了...</div>
+                    <div class="success-input-wrapper">
+                        <input type="text" class="text-input" id="successInput" placeholder="例如：完成了重要的项目报告">
+                        <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()" title="语音输入">🎤</button>
+                        <button class="btn-add" onclick="addSuccess()">添加</button>
                     </div>
-                    <textarea class="gratitude-input" id="gratitudeNature" placeholder="大自然让我感受到..."></textarea>
+                    <div class="voice-status" id="voiceStatus">正在聆听...</div>
+                    <div class="import-hint" id="importHint">
+                        从微习惯导入：
+                        <span id="importTags"></span>
+                    </div>
+                    <div class="success-list" id="successList"></div>
+                </div>
+            </section>
+            <section class="section" id="gratitudeSection">
+                <div class="section-header">
+                    <div class="section-icon">🌙</div>
+                    <div>
+                        <div class="section-title">感恩日记</div>
+                        <div class="section-subtitle">心怀感激，幸福常在</div>
+                    </div>
+                </div>
+                <div class="gratitude-grid">
+                    <div class="gratitude-card">
+                        <div class="gratitude-label">
+                            <div class="gratitude-label-left"><span>🌸</span> 感恩自己</div>
+                            <button class="gratitude-voice-btn" onclick="toggleGratitudeVoice('Self')" title="语音输入">🎤</button>
+                        </div>
+                        <textarea class="gratitude-input" id="gratitudeSelf" placeholder="今天，我欣赏自己的..."></textarea>
+                    </div>
+                    <div class="gratitude-card">
+                        <div class="gratitude-label">
+                            <div class="gratitude-label-left"><span>💝</span> 感恩他人</div>
+                            <button class="gratitude-voice-btn" onclick="toggleGratitudeVoice('Others')" title="语音输入">🎤</button>
+                        </div>
+                        <textarea class="gratitude-input" id="gratitudeOthers" placeholder="感谢_____，因为..."></textarea>
+                    </div>
+                    <div class="gratitude-card">
+                        <div class="gratitude-label">
+                            <div class="gratitude-label-left"><span>🍃</span> 感恩自然</div>
+                            <button class="gratitude-voice-btn" onclick="toggleGratitudeVoice('Nature')" title="语音输入">🎤</button>
+                        </div>
+                        <textarea class="gratitude-input" id="gratitudeNature" placeholder="大自然让我感受到..."></textarea>
+                    </div>
+                </div>
+            </section>
+            <div class="complete-section">
+                <button class="btn-complete" onclick="completeReview()">✨ 完成</button>
+                <div class="save-status" id="saveStatus">已自动保存</div>
+                <div class="backup-section">
+                    <button class="backup-btn" onclick="Store.manualExport()">💾 导出备份</button>
+                    <button class="backup-btn" onclick="document.getElementById('importFile').click()">📂 导入备份</button>
+                    <input type="file" id="importFile" class="backup-input" accept=".json" onchange="handleImport(event)">
                 </div>
             </div>
-        </section>
-
-        <!-- Complete Button -->
-        <div class="complete-section">
-            <button class="btn-complete" onclick="completeReview()">
-                ✨ 带着满足入睡
-            </button>
-            <div class="save-status" id="saveStatus">已自动保存</div>
+        </div>
+        <div id="weeklyView" class="weekly-section">
+            <section class="section">
+                <div class="weekly-header">
+                    <div class="section-header" style="margin-bottom: 0;">
+                        <div class="section-icon">📊</div>
+                        <div>
+                            <div class="section-title">周复盘</div>
+                            <div class="section-subtitle">回顾本周成长轨迹</div>
+                        </div>
+                    </div>
+                    <div class="weekly-nav">
+                        <button class="weekly-nav-btn" onclick="changeWeek(-1)">‹</button>
+                        <span class="weekly-date-range" id="weekDateRange">...</span>
+                        <button class="weekly-nav-btn" onclick="changeWeek(1)">›</button>
+                    </div>
+                </div>
+                <div class="weekly-stats-grid">
+                    <div class="weekly-stat-card">
+                        <div class="weekly-stat-value" id="weekHabitRate">0%</div>
+                        <div class="weekly-stat-label">习惯完成率</div>
+                    </div>
+                    <div class="weekly-stat-card">
+                        <div class="weekly-stat-value" id="weekSuccessCount">0</div>
+                        <div class="weekly-stat-label">成功记录</div>
+                    </div>
+                    <div class="weekly-stat-card">
+                        <div class="weekly-stat-value" id="weekGratitudeCount">0</div>
+                        <div class="weekly-stat-label">感恩时刻</div>
+                    </div>
+                </div>
+                <div class="weekly-chart">
+                    <div class="weekly-chart-title">本周习惯趋势</div>
+                    <div class="habit-trend-chart" id="habitTrendChart"></div>
+                </div>
+                <div class="weekly-highlights">
+                    <div class="weekly-highlights-title">本周精彩时刻</div>
+                    <div class="highlight-list" id="weeklyHighlights"></div>
+                </div>
+                <div class="weekly-summary">
+                    <div class="weekly-summary-title">本周总结</div>
+                    <textarea class="weekly-summary-input" id="weekSummaryInput" placeholder="这周我最大的收获是...&#10;下周我想重点改进..." oninput="saveWeeklySummary()"></textarea>
+                </div>
+            </section>
+        </div>
+        <div id="monthlyView" class="monthly-section">
+            <section class="section">
+                <div class="monthly-header">
+                    <div class="section-header" style="margin-bottom: 0;">
+                        <div class="section-icon">📅</div>
+                        <div>
+                            <div class="section-title">月复盘</div>
+                            <div class="section-subtitle">回顾整月成长轨迹</div>
+                        </div>
+                    </div>
+                    <div class="monthly-nav">
+                        <button class="monthly-nav-btn" onclick="changeMonth(-1)">‹</button>
+                        <span class="monthly-date-range" id="monthDateRange">...</span>
+                        <button class="monthly-nav-btn" onclick="changeMonth(1)">›</button>
+                    </div>
+                </div>
+                <div class="monthly-stats-grid">
+                    <div class="monthly-stat-card">
+                        <div class="monthly-stat-value" id="monthActiveDays">0</div>
+                        <div class="monthly-stat-label">活跃天数</div>
+                    </div>
+                    <div class="monthly-stat-card">
+                        <div class="monthly-stat-value" id="monthHabitRate">0%</div>
+                        <div class="monthly-stat-label">习惯完成率</div>
+                    </div>
+                    <div class="monthly-stat-card">
+                        <div class="monthly-stat-value" id="monthSuccessCount">0</div>
+                        <div class="monthly-stat-label">成功记录</div>
+                    </div>
+                    <div class="monthly-stat-card">
+                        <div class="monthly-stat-value" id="monthGratitudeCount">0</div>
+                        <div class="monthly-stat-label">感恩时刻</div>
+                    </div>
+                </div>
+                <div class="monthly-heatmap">
+                    <div class="monthly-heatmap-title">本月打卡热力图</div>
+                    <div class="heatmap-grid" id="monthHeatmap"></div>
+                    <div class="heatmap-legend">
+                        <div class="heatmap-legend-box"></div>
+                        <span>未打卡</span>
+                        <div class="heatmap-legend-box has-data"></div>
+                        <span>已打卡</span>
+                    </div>
+                </div>
+                <div class="monthly-top-habits">
+                    <div class="monthly-top-habits-title">本月习惯排行榜</div>
+                    <div class="top-habit-list" id="monthTopHabits"></div>
+                </div>
+                <div class="monthly-summary-goals">
+                    <div class="monthly-summary-box">
+                        <div class="monthly-summary-title">本月总结</div>
+                        <textarea class="monthly-summary-input" id="monthSummaryInput" placeholder="这个月我最大的收获是...&#10;我为自己感到骄傲的是..." oninput="saveMonthlySummary()"></textarea>
+                    </div>
+                    <div class="monthly-goals-box">
+                        <div class="monthly-goals-title">下月目标</div>
+                        <textarea class="monthly-goals-input" id="monthGoalsInput" placeholder="下个月我想重点培养的习惯...&#10;我想要达成的目标是..." oninput="saveMonthlyGoals()"></textarea>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
-
-    <!-- Add Habit Modal -->
     <div class="modal-overlay" id="addHabitModal">
         <div class="modal-content">
             <h3 class="modal-title">添加新习惯</h3>
@@ -1176,8 +525,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Celebration Overlay -->
     <div class="celebration-overlay" id="celebrationOverlay">
         <canvas id="particle-canvas"></canvas>
         <div class="celebration-content">
@@ -1201,20 +548,57 @@
             <button class="btn-close-celebration" onclick="closeCelebration()">明天见</button>
         </div>
     </div>
-
     <script>
-        // ===== Data Store =====
         const Store = {
-            getTodayKey() {
-                return new Date().toISOString().split('T')[0];
+            DB_NAME: 'ShiguangReviewDB',
+            DB_VERSION: 1,
+            STORE_NAME: 'reviews',
+            db: null,
+            async initDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(this.DB_NAME, this.DB_VERSION);
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => { this.db = request.result; resolve(this.db); };
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains(this.STORE_NAME)) {
+                            db.createObjectStore(this.STORE_NAME, { keyPath: 'date' });
+                        }
+                    };
+                });
             },
-            
-            getData() {
+            getTodayKey() { return new Date().toISOString().split('T')[0]; },
+            async getData() {
                 const key = this.getTodayKey();
-                const data = localStorage.getItem(`review_${key}`);
-                return data ? JSON.parse(data) : this.getDefaultData();
+                if (this.db) {
+                    try { const data = await this.getFromIndexedDB(key); if (data) return data; } catch (e) {}
+                }
+                const localData = localStorage.getItem(`review_${key}`);
+                if (localData) {
+                    const parsed = JSON.parse(localData);
+                    this.saveToIndexedDB(key, parsed).catch(console.error);
+                    return parsed;
+                }
+                return this.getDefaultData();
             },
-            
+            getFromIndexedDB(key) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([this.STORE_NAME], 'readonly');
+                    const store = transaction.objectStore(this.STORE_NAME);
+                    const request = store.get(key);
+                    request.onsuccess = () => resolve(request.result?.data || null);
+                    request.onerror = () => reject(request.error);
+                });
+            },
+            async saveToIndexedDB(key, data) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([this.STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(this.STORE_NAME);
+                    const request = store.put({ date: key, data: data, updatedAt: Date.now() });
+                    request.onsuccess = () => resolve();
+                    request.onerror = () => reject(request.error);
+                });
+            },
             getDefaultData() {
                 return {
                     habits: [
@@ -1227,13 +611,49 @@
                     completed: false
                 };
             },
-            
-            saveData(data) {
+            async saveData(data) {
                 const key = this.getTodayKey();
                 localStorage.setItem(`review_${key}`, JSON.stringify(data));
+                if (this.db) { try { await this.saveToIndexedDB(key, data); } catch (e) {} }
+                this.exportToFile(data, key);
                 this.showSaveStatus();
             },
-            
+            exportToFile(data, date) {
+                const exportData = { date: date, exportedAt: new Date().toISOString(), data: data };
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                this.lastExportURL = url;
+                this.lastExportDate = date;
+            },
+            triggerDownload(url, filename) {
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            },
+            manualExport() {
+                const key = this.getTodayKey();
+                const data = appData;
+                this.exportToFile(data, key);
+                if (this.lastExportURL) this.triggerDownload(this.lastExportURL, `拾光复盘_${key}.json`);
+            },
+            async importFromFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const imported = JSON.parse(e.target.result);
+                            if (imported.data) resolve(imported.data);
+                            else reject(new Error('Invalid file format'));
+                        } catch (err) { reject(err); }
+                    };
+                    reader.onerror = () => reject(reader.error);
+                    reader.readAsText(file);
+                });
+            },
             showSaveStatus() {
                 const status = document.getElementById('saveStatus');
                 status.textContent = '已自动保存';
@@ -1241,70 +661,40 @@
                 setTimeout(() => status.classList.remove('show'), 2000);
             }
         };
-
-        // ===== State =====
-        let appData = Store.getData();
+        let appData = Store.getDefaultData();
         let selectedIcon = '📝';
-
-        // ===== Initialization =====
-        function init() {
+        async function init() {
+            await Store.initDB().catch(console.error);
+            appData = await Store.getData();
             renderDate();
             renderHabits();
             renderSuccessList();
             renderGratitude();
             updateProgress();
-            createBackgroundStars();
             initIconSelector();
-            
-            // Auto-save gratitude inputs
             ['gratitudeSelf', 'gratitudeOthers', 'gratitudeNature'].forEach(id => {
                 document.getElementById(id).addEventListener('input', debounce(saveGratitude, 500));
             });
-            
-            // Enter key for success input
-            document.getElementById('successInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') addSuccess();
-            });
-            
-            // Enter key for new habit input
-            document.getElementById('newHabitName').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') confirmAddHabit();
-            });
+            document.getElementById('successInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') addSuccess(); });
+            document.getElementById('newHabitName').addEventListener('keypress', (e) => { if (e.key === 'Enter') confirmAddHabit(); });
         }
-
         function renderDate() {
             const now = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
             document.getElementById('dateDisplay').textContent = now.toLocaleDateString('zh-CN', options);
         }
-
-        function createBackgroundStars() {
-            const container = document.getElementById('bgStars');
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 4 + 's';
-                star.style.animationDuration = (3 + Math.random() * 3) + 's';
-                container.appendChild(star);
-            }
-        }
-
-        // ===== Habits Module =====
         function renderHabits() {
             const container = document.getElementById('habitsList');
             container.innerHTML = '';
-            
             appData.habits.forEach(habit => {
                 const item = document.createElement('div');
-                item.className = `habit-item ${habit.completed ? 'completed' : ''} ${!habit.isDefault ? 'custom' : ''}`;
+                item.className = `habit-item ${habit.completed ? 'completed' : ''}`;
                 item.innerHTML = `
                     <div class="habit-info">
                         <div class="habit-icon">${habit.icon}</div>
-                        <div class="habit-text">
+                        <div>
                             <div class="habit-name">${habit.name}</div>
-                            <div class="habit-streak">连续 ${habit.streak} 天</div>
+                            <div class="habit-streak">🔥 连续 ${habit.streak} 天</div>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center;">
@@ -1314,88 +704,40 @@
                 `;
                 container.appendChild(item);
             });
-            
             updateImportHint();
         }
-
         function toggleHabit(id, element) {
             const habit = appData.habits.find(h => h.id === id);
             if (!habit) return;
-            
             habit.completed = !habit.completed;
-            
-            // Create particle burst
-            if (habit.completed) {
-                createParticles(element);
-            }
-            
             Store.saveData(appData);
             renderHabits();
             updateProgress();
         }
-
         function deleteHabit(id, event) {
             event.stopPropagation();
             if (!confirm('确定要删除这个习惯吗？')) return;
-            
             appData.habits = appData.habits.filter(h => h.id !== id);
             Store.saveData(appData);
             renderHabits();
             updateProgress();
         }
-
-        function createParticles(element) {
-            const rect = element.getBoundingClientRect();
-            const colors = ['#f4d03f', '#e8a87c', '#ff9f7f', '#7fb069'];
-            
-            for (let i = 0; i < 12; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'fixed';
-                particle.style.left = rect.left + rect.width / 2 + 'px';
-                particle.style.top = rect.top + rect.height / 2 + 'px';
-                particle.style.width = '6px';
-                particle.style.height = '6px';
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.borderRadius = '50%';
-                particle.style.pointerEvents = 'none';
-                particle.style.zIndex = '9999';
-                
-                const angle = (i / 12) * Math.PI * 2;
-                const velocity = 80 + Math.random() * 40;
-                const tx = Math.cos(angle) * velocity;
-                const ty = Math.sin(angle) * velocity;
-                
-                particle.style.setProperty('--tx', `${tx}px`);
-                particle.style.setProperty('--ty', `${ty}px`);
-                particle.style.animation = 'particleBurst 0.8s ease-out forwards';
-                
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 800);
-            }
-        }
-
         function updateImportHint() {
             const completedHabits = appData.habits.filter(h => h.completed);
             const hint = document.getElementById('importHint');
             const tagsContainer = document.getElementById('importTags');
-            
             if (completedHabits.length > 0) {
                 hint.classList.add('has-content');
-                tagsContainer.innerHTML = completedHabits.map(h => 
-                    `<span class="import-tag" onclick="importHabit('${h.name}')">${h.icon} ${h.name}</span>`
-                ).join('');
+                tagsContainer.innerHTML = completedHabits.map(h => `<span class="import-tag" onclick="importHabit('${h.name}')">${h.icon} ${h.name}</span>`).join('');
             } else {
                 hint.classList.remove('has-content');
             }
         }
-
         function importHabit(name) {
             const input = document.getElementById('successInput');
             input.value = `完成了${name}`;
             addSuccess();
         }
-
-        // ===== Add Habit Modal =====
         function initIconSelector() {
             const selector = document.getElementById('iconSelector');
             selector.addEventListener('click', (e) => {
@@ -1406,88 +748,55 @@
                 }
             });
         }
-
         function openAddHabitModal() {
             document.getElementById('addHabitModal').classList.add('active');
             document.getElementById('newHabitName').focus();
         }
-
         function closeAddHabitModal() {
             document.getElementById('addHabitModal').classList.remove('active');
             document.getElementById('newHabitName').value = '';
         }
-
         function confirmAddHabit() {
             const name = document.getElementById('newHabitName').value.trim();
-            if (!name) {
-                alert('请输入习惯名称');
-                return;
-            }
-            
+            if (!name) { alert('请输入习惯名称'); return; }
             const newId = Math.max(...appData.habits.map(h => h.id), 0) + 1;
-            appData.habits.push({
-                id: newId,
-                name: name,
-                icon: selectedIcon,
-                streak: 1,
-                completed: false,
-                isDefault: false
-            });
-            
+            appData.habits.push({ id: newId, name: name, icon: selectedIcon, streak: 1, completed: false, isDefault: false });
             Store.saveData(appData);
             renderHabits();
             updateProgress();
             closeAddHabitModal();
         }
-
-        // ===== Success Diary Module =====
         function addSuccess() {
             const input = document.getElementById('successInput');
             const text = input.value.trim();
-            
             if (!text) return;
-            
-            appData.successList.push({
-                id: Date.now(),
-                text: text,
-                time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
-            });
-            
+            appData.successList.push({ id: Date.now(), text: text, time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) });
             input.value = '';
             Store.saveData(appData);
             renderSuccessList();
             updateProgress();
         }
-
         function renderSuccessList() {
             const container = document.getElementById('successList');
             container.innerHTML = '';
-            
             appData.successList.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'success-item';
-                div.innerHTML = `
-                    <span class="success-text">${item.text}</span>
-                    <button class="success-delete" onclick="deleteSuccess(${item.id})">×</button>
-                `;
+                div.innerHTML = `<span class="success-text">${item.text}</span><button class="success-delete" onclick="deleteSuccess(${item.id})">×</button>`;
                 container.appendChild(div);
             });
         }
-
         function deleteSuccess(id) {
             appData.successList = appData.successList.filter(item => item.id !== id);
             Store.saveData(appData);
             renderSuccessList();
             updateProgress();
         }
-
-        // ===== Gratitude Module =====
         function renderGratitude() {
             document.getElementById('gratitudeSelf').value = appData.gratitude.self;
             document.getElementById('gratitudeOthers').value = appData.gratitude.others;
             document.getElementById('gratitudeNature').value = appData.gratitude.nature;
         }
-
         function saveGratitude() {
             appData.gratitude.self = document.getElementById('gratitudeSelf').value;
             appData.gratitude.others = document.getElementById('gratitudeOthers').value;
@@ -1495,132 +804,268 @@
             Store.saveData(appData);
             updateProgress();
         }
-
-        // ===== Progress & Completion =====
         function updateProgress() {
-            let completed = 0;
-            let total = 0;
-            
-            // Habits: 每个习惯占15%
+            let completed = 0, total = 0;
             const habitProgress = appData.habits.filter(h => h.completed).length / appData.habits.length;
             completed += habitProgress * 45;
             total += 45;
-            
-            // Success: 至少1条占25%
             const successProgress = Math.min(appData.successList.length, 1);
             completed += successProgress * 25;
             total += 25;
-            
-            // Gratitude: 每个非空占10%
             const gratitudeFields = [appData.gratitude.self, appData.gratitude.others, appData.gratitude.nature];
             const gratitudeProgress = gratitudeFields.filter(f => f.trim()).length / 3;
             completed += gratitudeProgress * 30;
             total += 30;
-            
             const percentage = Math.round((completed / total) * 100);
-            
-            // Update ring
             const circle = document.getElementById('progressCircle');
             const circumference = 2 * Math.PI * 36;
             const offset = circumference - (percentage / 100) * circumference;
             circle.style.strokeDashoffset = offset;
-            
-            // Update text
             document.getElementById('progressText').textContent = percentage + '%';
         }
-
         function completeReview() {
             appData.completed = true;
             Store.saveData(appData);
-            
-            // Update stats
-            document.getElementById('statHabits').textContent = 
-                appData.habits.filter(h => h.completed).length;
+            document.getElementById('statHabits').textContent = appData.habits.filter(h => h.completed).length;
             document.getElementById('statSuccess').textContent = appData.successList.length;
-            
             const g = appData.gratitude;
             let gratitudeCount = 0;
             if (g.self.trim()) gratitudeCount++;
-            if (g.gothers.trim()) gratitudeCount++;
+            if (g.others.trim()) gratitudeCount++;
             if (g.nature.trim()) gratitudeCount++;
             document.getElementById('statGratitude').textContent = gratitudeCount;
-            
-            // Show celebration
-            const overlay = document.getElementById('celebrationOverlay');
-            overlay.classList.add('active');
-            
-            // Start particle animation
-            initCelebrationParticles();
+            document.getElementById('celebrationOverlay').classList.add('active');
         }
-
-        function closeCelebration() {
-            document.getElementById('celebrationOverlay').classList.remove('active');
+        function closeCelebration() { document.getElementById('celebrationOverlay').classList.remove('active'); }
+        let recognition = null, isRecording = false;
+        let gratitudeRecognition = null, currentGratitudeField = null;
+        function initVoiceInput() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'zh-CN';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.onstart = () => { isRecording = true; document.getElementById('voiceBtn').classList.add('recording'); document.getElementById('voiceStatus').classList.add('show'); };
+                recognition.onend = () => { isRecording = false; document.getElementById('voiceBtn').classList.remove('recording'); document.getElementById('voiceStatus').classList.remove('show'); };
+                recognition.onresult = (event) => { const transcript = event.results[0][0].transcript; document.getElementById('successInput').value = transcript; };
+                recognition.onerror = (event) => { isRecording = false; document.getElementById('voiceBtn').classList.remove('recording'); document.getElementById('voiceStatus').classList.remove('show'); if (event.error === 'not-allowed') alert('请允许使用麦克风权限'); };
+            } else { document.getElementById('voiceBtn').style.display = 'none'; }
         }
-
-        // ===== Celebration Particles =====
-        function initCelebrationParticles() {
-            const canvas = document.getElementById('particle-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const particles = [];
-            const colors = ['#e8a87c', '#f4d03f', '#ff9f7f', '#7fb069', '#f5e6d3'];
-            
-            for (let i = 0; i < 100; i++) {
-                particles.push({
-                    x: canvas.width / 2,
-                    y: canvas.height / 2,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10 - 5,
-                    life: 1,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 4 + 2
-                });
+        function initGratitudeVoiceInput() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                gratitudeRecognition = new SpeechRecognition();
+                gratitudeRecognition.lang = 'zh-CN';
+                gratitudeRecognition.continuous = false;
+                gratitudeRecognition.interimResults = false;
+                gratitudeRecognition.onstart = () => { const btn = document.getElementById(`gratitudeVoiceBtn${currentGratitudeField}`); if (btn) btn.classList.add('recording'); };
+                gratitudeRecognition.onend = () => { if (currentGratitudeField) { const btn = document.getElementById(`gratitudeVoiceBtn${currentGratitudeField}`); if (btn) btn.classList.remove('recording'); } currentGratitudeField = null; };
+                gratitudeRecognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    const textarea = document.getElementById(`gratitude${currentGratitudeField}`);
+                    if (textarea) { textarea.value = textarea.value ? textarea.value + ' ' + transcript : transcript; textarea.focus(); saveGratitude(); }
+                };
+                gratitudeRecognition.onerror = (event) => { if (currentGratitudeField) { const btn = document.getElementById(`gratitudeVoiceBtn${currentGratitudeField}`); if (btn) btn.classList.remove('recording'); } currentGratitudeField = null; if (event.error === 'not-allowed') alert('请允许使用麦克风权限'); };
             }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                particles.forEach((p, i) => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.2; // gravity
-                    p.life -= 0.008;
-                    p.size *= 0.99;
-                    
-                    if (p.life > 0) {
-                        ctx.globalAlpha = p.life;
-                        ctx.fillStyle = p.color;
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                });
-                
-                if (particles.some(p => p.life > 0)) {
-                    requestAnimationFrame(animate);
+        }
+        function toggleGratitudeVoice(field) {
+            if (!gratitudeRecognition) { alert('您的浏览器不支持语音识别功能'); return; }
+            if (currentGratitudeField === field) { gratitudeRecognition.stop(); return; }
+            if (currentGratitudeField) { const prevBtn = document.getElementById(`gratitudeVoiceBtn${currentGratitudeField}`); if (prevBtn) prevBtn.classList.remove('recording'); try { gratitudeRecognition.stop(); } catch (e) {} }
+            currentGratitudeField = field;
+            try { gratitudeRecognition.start(); } catch (err) { console.error('启动语音识别失败:', err); }
+        }
+        function toggleVoiceInput() {
+            if (!recognition) { alert('您的浏览器不支持语音识别功能'); return; }
+            if (isRecording) recognition.stop();
+            else { try { recognition.start(); } catch (err) { console.error('启动语音识别失败:', err); } }
+        }
+        let currentView = 'day', currentWeekOffset = 0, currentMonthOffset = 0;
+        function switchView(view) {
+            currentView = view;
+            document.getElementById('viewDay').classList.toggle('active', view === 'day');
+            document.getElementById('viewWeek').classList.toggle('active', view === 'week');
+            document.getElementById('viewMonth').classList.toggle('active', view === 'month');
+            document.getElementById('dailyView').style.display = view === 'day' ? 'block' : 'none';
+            document.getElementById('weeklyView').classList.toggle('active', view === 'week');
+            document.getElementById('monthlyView').classList.toggle('active', view === 'month');
+            document.getElementById('dayProgress').style.display = view === 'day' ? 'block' : 'none';
+            if (view === 'week') renderWeeklyView();
+            else if (view === 'month') renderMonthlyView();
+            else renderDate();
+        }
+        function getWeekDates(offset = 0) {
+            const now = new Date();
+            const currentDay = now.getDay();
+            const diff = now.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
+            const monday = new Date(now.setDate(diff + (offset * 7)));
+            const dates = [];
+            for (let i = 0; i < 7; i++) { const date = new Date(monday); date.setDate(monday.getDate() + i); dates.push(date.toISOString().split('T')[0]); }
+            return dates;
+        }
+        function formatWeekRange(dates) {
+            const start = new Date(dates[0]), end = new Date(dates[6]);
+            return `${start.getMonth() + 1}月${start.getDate()}日 - ${end.getMonth() + 1}月${end.getDate()}日`;
+        }
+        function getDayName(dateStr) { const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']; return days[new Date(dateStr).getDay()]; }
+        async function getWeekData(dates) {
+            const weekData = { habits: {}, successList: [], gratitude: [], dailyStats: [] };
+            for (const date of dates) {
+                let dayData = null;
+                if (Store.db) { try { dayData = await Store.getFromIndexedDB(date); } catch (e) {} }
+                if (!dayData) { const localData = localStorage.getItem(`review_${date}`); if (localData) dayData = JSON.parse(localData); }
+                if (dayData) {
+                    const completedHabits = dayData.habits ? dayData.habits.filter(h => h.completed).length : 0;
+                    const totalHabits = dayData.habits ? dayData.habits.length : 0;
+                    weekData.dailyStats.push({ date: date, dayName: getDayName(date), habitRate: totalHabits > 0 ? (completedHabits / totalHabits) : 0, successCount: dayData.successList ? dayData.successList.length : 0, gratitudeCount: dayData.gratitude ? [dayData.gratitude.self, dayData.gratitude.others, dayData.gratitude.nature].filter(g => g && g.trim()).length : 0 });
+                    if (dayData.successList) dayData.successList.forEach(s => weekData.successList.push({ ...s, date: date }));
+                    if (dayData.gratitude) ['self', 'others', 'nature'].forEach(type => { if (dayData.gratitude[type] && dayData.gratitude[type].trim()) weekData.gratitude.push({ type: type, text: dayData.gratitude[type], date: date }); });
+                } else { weekData.dailyStats.push({ date: date, dayName: getDayName(date), habitRate: 0, successCount: 0, gratitudeCount: 0 }); }
+            }
+            return weekData;
+        }
+        async function renderWeeklyView() {
+            const weekDates = getWeekDates(currentWeekOffset);
+            document.getElementById('weekDateRange').textContent = formatWeekRange(weekDates);
+            const weekData = await getWeekData(weekDates);
+            const totalHabitRate = weekData.dailyStats.reduce((sum, d) => sum + d.habitRate, 0) / 7;
+            document.getElementById('weekHabitRate').textContent = Math.round(totalHabitRate * 100) + '%';
+            document.getElementById('weekSuccessCount').textContent = weekData.successList.length;
+            document.getElementById('weekGratitudeCount').textContent = weekData.gratitude.length;
+            renderHabitTrendChart(weekData.dailyStats);
+            renderWeeklyHighlights(weekData);
+            loadWeeklySummary(weekDates[0]);
+        }
+        function renderHabitTrendChart(dailyStats) {
+            const container = document.getElementById('habitTrendChart');
+            container.innerHTML = '';
+            dailyStats.forEach(stat => { const dayEl = document.createElement('div'); dayEl.className = 'trend-day'; dayEl.innerHTML = `<div class="trend-bar" style="height: ${Math.max(stat.habitRate * 100, 4)}%"></div><div class="trend-day-label">${stat.dayName}</div>`; container.appendChild(dayEl); });
+        }
+        function renderWeeklyHighlights(weekData) {
+            const container = document.getElementById('weeklyHighlights');
+            container.innerHTML = '';
+            const highlights = [];
+            weekData.successList.forEach(s => highlights.push({ date: s.date, text: s.text, type: 'success' }));
+            weekData.gratitude.forEach(g => highlights.push({ date: g.date, text: g.text, type: 'gratitude' }));
+            highlights.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const topHighlights = highlights.slice(0, 5);
+            if (topHighlights.length === 0) { container.innerHTML = '<div class="highlight-empty">本周还没有记录，开始打卡吧！</div>'; return; }
+            topHighlights.forEach(h => { const item = document.createElement('div'); item.className = 'highlight-item'; item.innerHTML = `<span class="highlight-date">${h.date.slice(5)}</span><span class="highlight-text">${h.text}</span>`; container.appendChild(item); });
+        }
+        function changeWeek(direction) { currentWeekOffset += direction; renderWeeklyView(); }
+        function getWeekKey(dateStr) { const date = new Date(dateStr); return `${date.getFullYear()}-W${getWeekNumber(date)}`; }
+        function getWeekNumber(date) { const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())); const dayNum = d.getUTCDay() || 7; d.setUTCDate(d.getUTCDate() + 4 - dayNum); const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1)); return Math.ceil((((d - yearStart) / 86400000) + 1) / 7); }
+        function saveWeeklySummary() { const weekDates = getWeekDates(currentWeekOffset); localStorage.setItem(`weekly_summary_${getWeekKey(weekDates[0])}`, document.getElementById('weekSummaryInput').value); }
+        function loadWeeklySummary(weekStartDate) { document.getElementById('weekSummaryInput').value = localStorage.getItem(`weekly_summary_${getWeekKey(weekStartDate)}`) || ''; }
+        function getMonthDates(offset = 0) {
+            const now = new Date(), year = now.getFullYear(), month = now.getMonth() + offset;
+            const targetDate = new Date(year, month, 1), targetYear = targetDate.getFullYear(), targetMonth = targetDate.getMonth();
+            const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+            const dates = [];
+            for (let i = 1; i <= daysInMonth; i++) dates.push(new Date(targetYear, targetMonth, i).toISOString().split('T')[0]);
+            return dates;
+        }
+        function formatMonthYear(dateStr) { const date = new Date(dateStr); return `${date.getFullYear()}年${date.getMonth() + 1}月`; }
+        async function getMonthData(dates) {
+            const monthData = { dailyData: {}, habitCounts: {}, totalSuccess: 0, totalGratitude: 0, activeDays: 0 };
+            for (const date of dates) {
+                let dayData = null;
+                if (Store.db) { try { dayData = await Store.getFromIndexedDB(date); } catch (e) {} }
+                if (!dayData) { const localData = localStorage.getItem(`review_${date}`); if (localData) dayData = JSON.parse(localData); }
+                if (dayData) {
+                    monthData.dailyData[date] = dayData;
+                    const hasHabits = dayData.habits && dayData.habits.some(h => h.completed);
+                    const hasSuccess = dayData.successList && dayData.successList.length > 0;
+                    const hasGratitude = dayData.gratitude && [dayData.gratitude.self, dayData.gratitude.others, dayData.gratitude.nature].some(g => g && g.trim());
+                    if (hasHabits || hasSuccess || hasGratitude) monthData.activeDays++;
+                    if (dayData.habits) dayData.habits.forEach(h => { if (!monthData.habitCounts[h.name]) monthData.habitCounts[h.name] = { count: 0, icon: h.icon, total: 0 }; monthData.habitCounts[h.name].total++; if (h.completed) monthData.habitCounts[h.name].count++; });
+                    if (dayData.successList) monthData.totalSuccess += dayData.successList.length;
+                    if (dayData.gratitude) ['self', 'others', 'nature'].forEach(type => { if (dayData.gratitude[type] && dayData.gratitude[type].trim()) monthData.totalGratitude++; });
                 }
             }
-            
-            animate();
+            return monthData;
         }
-
-        // ===== Utilities =====
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
+        async function renderMonthlyView() {
+            const monthDates = getMonthDates(currentMonthOffset);
+            document.getElementById('monthDateRange').textContent = formatMonthYear(monthDates[0]);
+            const monthData = await getMonthData(monthDates);
+            document.getElementById('monthActiveDays').textContent = monthData.activeDays;
+            document.getElementById('monthSuccessCount').textContent = monthData.totalSuccess;
+            document.getElementById('monthGratitudeCount').textContent = monthData.totalGratitude;
+            let totalHabitDays = 0, completedHabitDays = 0;
+            Object.values(monthData.dailyData).forEach(dayData => { if (dayData.habits) dayData.habits.forEach(h => { totalHabitDays++; if (h.completed) completedHabitDays++; }); });
+            document.getElementById('monthHabitRate').textContent = totalHabitDays > 0 ? Math.round((completedHabitDays / totalHabitDays) * 100) + '%' : '0%';
+            renderMonthHeatmap(monthDates, monthData.dailyData);
+            renderTopHabits(monthData.habitCounts);
+            loadMonthlySummary(monthDates[0]);
         }
-
-        // ===== Start =====
+        function renderMonthHeatmap(dates, dailyData) {
+            const container = document.getElementById('monthHeatmap'), today = new Date().toISOString().split('T')[0];
+            container.innerHTML = '';
+            dates.forEach(date => {
+                const dayData = dailyData[date];
+                const hasData = dayData && ((dayData.habits && dayData.habits.some(h => h.completed)) || (dayData.successList && dayData.successList.length > 0) || (dayData.gratitude && [dayData.gratitude.self, dayData.gratitude.others, dayData.gratitude.nature].some(g => g && g.trim())));
+                const dayEl = document.createElement('div');
+                dayEl.className = 'heatmap-day' + (hasData ? ' has-data' : '') + (date === today ? ' today' : '');
+                dayEl.textContent = new Date(date).getDate();
+                container.appendChild(dayEl);
+            });
+        }
+        function renderTopHabits(habitCounts) {
+            const container = document.getElementById('monthTopHabits');
+            container.innerHTML = '';
+            const sortedHabits = Object.entries(habitCounts).map(([name, data]) => ({ name, ...data, rate: data.total > 0 ? (data.count / data.total) : 0 })).sort((a, b) => b.rate - a.rate).slice(0, 5);
+            if (sortedHabits.length === 0) { container.innerHTML = '<div class="highlight-empty">本月还没有习惯记录</div>'; return; }
+            sortedHabits.forEach((habit, index) => { const item = document.createElement('div'); item.className = 'top-habit-item'; item.innerHTML = `<div class="top-habit-rank">${index + 1}</div><div class="top-habit-icon">${habit.icon}</div><div class="top-habit-info"><div class="top-habit-name">${habit.name}</div><div class="top-habit-count">完成 ${habit.count}/${habit.total} 天</div></div><div class="top-habit-bar"><div class="top-habit-bar-fill" style="width: ${habit.rate * 100}%"></div></div>`; container.appendChild(item); });
+        }
+        function changeMonth(direction) { currentMonthOffset += direction; renderMonthlyView(); }
+        function getMonthKey(dateStr) { const date = new Date(dateStr); return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`; }
+        function saveMonthlySummary() { const monthDates = getMonthDates(currentMonthOffset); localStorage.setItem(`monthly_summary_${getMonthKey(monthDates[0])}`, document.getElementById('monthSummaryInput').value); }
+        function saveMonthlyGoals() { const monthDates = getMonthDates(currentMonthOffset); localStorage.setItem(`monthly_goals_${getMonthKey(monthDates[0])}`, document.getElementById('monthGoalsInput').value); }
+        function loadMonthlySummary(monthStartDate) { document.getElementById('monthSummaryInput').value = localStorage.getItem(`monthly_summary_${getMonthKey(monthStartDate)}`) || ''; document.getElementById('monthGoalsInput').value = localStorage.getItem(`monthly_goals_${getMonthKey(monthStartDate)}`) || ''; }
+        async function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            try {
+                const importedData = await Store.importFromFile(file);
+                if (confirm(`导入 ${file.name} 中的记录？这将覆盖当前数据。`)) {
+                    appData = importedData;
+                    Store.saveData(appData);
+                    renderHabits();
+                    renderSuccessList();
+                    renderGratitude();
+                    updateProgress();
+                    alert('导入成功！');
+                }
+            } catch (err) { alert('导入失败：' + err.message); }
+            event.target.value = '';
+        }
+        const darkImages = ['dark/pexels-eberhardgross-1417651.jpg', 'dark/pexels-diego-madrigal-162471-6037751.jpg', 'dark/pexels-gustavo-tavares-57043849-8145023.jpg', 'dark/pexels-ken-cheung-3355734-7288405.jpg', 'dark/pexels-krisof-1252873.jpg', 'dark/pexels-markusspiske-113054.jpg', 'dark/pexels-paul-1705307-3254555.jpg', 'dark/pexels-qaarif-7581409.jpg', 'dark/pexels-sanaan-3075993.jpg', 'dark/pexels-wendywei-2753453.jpg', 'dark/pexels-wendywei-2758741.jpg', 'dark/pexels-zhangkaiyv-1083515.jpg'];
+        const brightImages = ['bright/pexels-124357283-9962450.jpg', 'bright/pexels-2149938750-37161527.jpg', 'bright/pexels-236636281-36947287.jpg', 'bright/pexels-669212965-32351706.jpg', 'bright/pexels-aaron-photo-605454664-17483896.jpg', 'bright/pexels-afhamhmsyri-34021093.jpg', 'bright/pexels-anatoleos-34745150.jpg', 'bright/pexels-antonio-garcia-prats-1579305-37111691.jpg', 'bright/pexels-danila-popov-85164195-9007456.jpg', 'bright/pexels-jonathan-cordova-r-2637981-35363343.jpg', 'bright/pexels-jori-kena-1869683831-35247011.jpg', 'bright/pexels-markus-winkler-1430818-31529278.jpg', 'bright/pexels-muvacehe-424977745-24737963.jpg', 'bright/pexels-navlakha-30929210.jpg', 'bright/pexels-reojuve-32854811.jpg', 'bright/pexels-saynna-maria14-555295920-16730431.jpg', 'bright/pexels-simon-wang-77758496-32625681.jpg', 'bright/pexels-sinan-aslan-1844393508-36071754.jpg'];
+        let currentTheme = 'dark', currentImageIndex = 0;
+        function switchTheme(theme) {
+            currentTheme = theme;
+            document.querySelectorAll('.theme-btn').forEach((btn, index) => { btn.classList.toggle('active', (theme === 'dark' && index === 0) || (theme === 'bright' && index === 1)); });
+            const bgImage = document.getElementById('bgImage');
+            bgImage.classList.remove('dark-theme', 'bright-theme');
+            bgImage.classList.add(theme + '-theme');
+            const images = theme === 'dark' ? darkImages : brightImages;
+            currentImageIndex = Math.floor(Math.random() * images.length);
+            bgImage.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+        }
+        function cycleBackground() {
+            const bgImage = document.getElementById('bgImage');
+            const images = currentTheme === 'dark' ? darkImages : brightImages;
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            bgImage.style.opacity = '0.5';
+            setTimeout(() => { bgImage.style.backgroundImage = `url('${images[currentImageIndex]}')`; bgImage.style.opacity = '1'; }, 500);
+        }
+        setInterval(cycleBackground, 30000);
+        function debounce(func, wait) { let timeout; return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func(...args), wait); }; }
         init();
+        initVoiceInput();
+        initGratitudeVoiceInput();
     </script>
 </body>
 </html>
